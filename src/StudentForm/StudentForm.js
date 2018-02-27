@@ -4,6 +4,7 @@ import Checkbox from '../Checkbox/Checkbox'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 
 class StudentForm extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
@@ -29,29 +30,30 @@ class StudentForm extends Component {
     }, this.fetchClasses)
   }
 
-  handleSubmit = e => {
-    console.log(e.target)
-    e.preventDefault();
-  }
-
-  handleInputChange = e => {
+  handleInputChange = (e, item) => {
     const { value, name } = e.target
     this.setState(prevState => {
       if (value) {
         return {
-          done: [...prevState.done, name]
+          done: [...prevState.done, item]
         }
       }
       return {
-        done: prevState.done.filter(item => item !== name)
+        done: prevState.done.filter(item => item.codDisciplina !== name)
       }
     });
+  }
+
+  handleFormSubmit = e => {
+    const { done, course } = this.state
+    e.preventDefault()
+    this.props.handleSubmit(course, done)
   }
 
   showDisciplines = () => {
     const { classes } = this.state
     return (
-      <form className='student-form-classes' onSubmit={this.handleSubmit}>
+      <form className='student-form-classes' onSubmit={this.handleFormSubmit}>
        {
         classes.map(item =>
           <div key={item.codDisciplina}>
@@ -59,7 +61,7 @@ class StudentForm extends Component {
               name={item.codDisciplina}
               type='checkbox'
               value={item.codDisciplina}
-              onChange={this.handleInputChange} />
+              onChange={e => this.handleInputChange(e, item)} />
             <span>{`${item.codDisciplina} - ${item.nome}`}</span>
           </div>
         )
@@ -91,6 +93,10 @@ class StudentForm extends Component {
       </div>
     )
   }
+}
+
+StudentForm.propTypes = {
+  handleSubmit: PropTypes.func
 }
 
 export default StudentForm
