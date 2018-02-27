@@ -25,5 +25,6 @@
   border: solid #ccc;
   border-width: 1px 0 0 1px;
   text-transform: capitalize;
+  overflow-wrap: break-word;
   font-size: .85em;
 }
