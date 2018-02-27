@@ -41,6 +41,10 @@ class AppBody extends Component {
     })
   }
 
+  showClassesGrid = () => {
+    this.setState({ isGridVisible: false })
+  }
+
   render() {
     const { 
       isGridVisible, 
@@ -51,7 +55,10 @@ class AppBody extends Component {
       <section className='app-body'>
         <div className='app-body-container'>
           { isGridVisible
-            ? <ClassScheduleGrid classes={classes} classesGrid={classesGrid} />
+            ? <ClassScheduleGrid 
+                classes={classes} 
+                classesGrid={classesGrid}
+                showClassesGrid={this.showClassesGrid} />
             : <StudentForm handleSubmit={this.handleSubmit} />
           }
         </div>
