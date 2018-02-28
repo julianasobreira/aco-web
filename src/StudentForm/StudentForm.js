@@ -81,7 +81,7 @@ class StudentForm extends Component {
           value={course}
           onChange={this.handleChange}
           options={[
-            { value: 'Engenharia de Computação', label: 'Engenharia da Computação' }
+            { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
           ]}
         />
         { classes.length > 0 &&
