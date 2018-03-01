@@ -10,14 +10,27 @@ class StudentForm extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
   state = {
     course: '',
-    classes: [],
+    classes: null,
     done: []
   }
 
   fetchClasses = () => {
     axios.get(`${this.baseURL}grade?curso=${this.state.course}`)
     .then(response => {
-      this.setState({ classes: response.data })
+      const classes = response.data
+      const courseModules = {}
+      classes.forEach(classItem => {
+        if (courseModules[classItem.ciclo]) {
+          courseModules[classItem.ciclo] = [
+            ...courseModules[classItem.ciclo],
+            classItem
+          ]
+        } else {
+          courseModules[classItem.ciclo] = [classItem]
+        }
+      })
+      console.log(courseModules)
+      this.setState({ classes: courseModules })
     })
     .catch(error => {
       console.log(error)
@@ -55,18 +68,25 @@ class StudentForm extends Component {
     return (
       <form className='student-form-classes' onSubmit={this.handleFormSubmit}>
        {
-        classes.map(item =>
-          <div key={item.codDisciplina}>
-            <input
-              name={item.codDisciplina}
-              type='checkbox'
-              value={item.codDisciplina}
-              onChange={e => this.handleInputChange(e, item)} />
-            <span>{`${item.codDisciplina} - ${item.nome}`}</span>
+        Object.keys(classes).map(moduleName =>
+          <div key={moduleName}>
+            <h4>{moduleName}</h4>
+            {
+              classes[moduleName].map(item =>
+                <div>
+                  <input
+                    name={item.codDisciplina}
+                    type='checkbox'
+                    value={item.codDisciplina}
+                    onChange={e => this.handleInputChange(e, item)} />
+                  <span>{`${item.codDisciplina} - ${item.nome}`}</span>
+                </div>   
+              )
+            }
           </div>
         )
        }
-       <button type='submit'>Gerar grade</button>
+       <button className='student-form-button' type='submit'>Gerar grade</button>
       </form> 
     )
   }
@@ -84,7 +104,7 @@ class StudentForm extends Component {
             { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
           ]}
         />
-        { classes.length > 0 &&
+        { classes &&
           <div>
             <h3>Disciplinas Cursadas</h3>
             {this.showDisciplines()}
