@@ -22,9 +22,9 @@
 }
 
 .app-subheader__link {
-    border-bottom: 1px solid #3b99fc;
-    outline: none;
-    text-decoration: none;
-    color: #fff;
-    text-decoration: none;
+  /*border-bottom: 1px solid #3b99fc;*/
+  outline: none;
+  text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }

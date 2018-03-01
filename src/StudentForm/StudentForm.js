@@ -73,7 +73,7 @@ class StudentForm extends Component {
             <h4>{moduleName}</h4>
             {
               classes[moduleName].map(item =>
-                <div>
+                <div key={item.codDisciplina}>
                   <input
                     name={item.codDisciplina}
                     type='checkbox'
