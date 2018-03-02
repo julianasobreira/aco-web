@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './AppBody.css'
 import StudentForm from '../StudentForm/StudentForm'
+import Loading from '../Loading/Loading'
 import ClassScheduleGrid from '../ClassScheduleGrid/ClassScheduleGrid'
 import axios from 'axios'
 
@@ -9,6 +10,7 @@ class AppBody extends Component {
   state = {
     classes: [],
     isGridVisible: false,
+    isFetching: false,
     classesGrid: {
       seg: { '8': '', '10': '', '14': '', '16': '' },
       ter: { '8': '', '10': '', '14': '', '16': '' },
@@ -18,11 +20,8 @@ class AppBody extends Component {
     }
   }
 
-  handleSubmit = (course, done) => {
-    this.fetchClasses(course, done)
-  }
-
-  fetchClasses = (course, done) => {
+  fetchSolutions = (course, done) => {
+    this.setState({ isFetching: true })
     axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
     .then(response => {
       const classes = response.data
@@ -33,6 +32,7 @@ class AppBody extends Component {
       })
       this.setState({ 
         isGridVisible: true,
+        isFetching: false,
         classesGrid
       })
     })
@@ -49,6 +49,7 @@ class AppBody extends Component {
     const { 
       isGridVisible, 
       classesGrid,
+      isFetching,
       classes } = this.state
 
     return (
@@ -59,8 +60,9 @@ class AppBody extends Component {
                 classes={classes} 
                 classesGrid={classesGrid}
                 showClassesGrid={this.showClassesGrid} />
-            : <StudentForm handleSubmit={this.handleSubmit} />
+            : <StudentForm handleSubmit={this.fetchSolutions} />
           }
+          { isFetching && <Loading /> }
         </div>
       </section>
     )

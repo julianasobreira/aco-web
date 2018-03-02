@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './StudentForm.css'
-import Checkbox from '../Checkbox/Checkbox'
+import Loading from '../Loading/Loading'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import axios from 'axios'
@@ -10,11 +10,13 @@ class StudentForm extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
   state = {
     course: '',
+    isFetching: false,
     classes: null,
     done: []
   }
 
   fetchClasses = () => {
+    this.setState({ isFetching: true })
     axios.get(`${this.baseURL}grade?curso=${this.state.course}`)
     .then(response => {
       const classes = response.data
@@ -30,7 +32,10 @@ class StudentForm extends Component {
         }
       })
       console.log(courseModules)
-      this.setState({ classes: courseModules })
+      this.setState({ 
+        classes: courseModules,
+        isFetching: false
+      })
     })
     .catch(error => {
       console.log(error)
@@ -92,7 +97,11 @@ class StudentForm extends Component {
   }
 
   render() {
-    const { course, classes } = this.state
+    const { 
+      course, 
+      classes,
+      isFetching } = this.state
+
     return (
       <div>
         <h3>Curso</h3>
@@ -110,6 +119,7 @@ class StudentForm extends Component {
             {this.showDisciplines()}
           </div>
         }
+        { isFetching && <Loading /> }
       </div>
     )
   }
