@@ -22,6 +22,7 @@ class StudentForm extends Component {
       const classes = response.data
       const courseModules = {}
       classes.forEach(classItem => {
+        // divindindo as disciplinas por ciclo
         if (courseModules[classItem.ciclo]) {
           courseModules[classItem.ciclo] = [
             ...courseModules[classItem.ciclo],
@@ -31,15 +32,37 @@ class StudentForm extends Component {
           courseModules[classItem.ciclo] = [classItem]
         }
       })
-      console.log(courseModules)
       this.setState({ 
         classes: courseModules,
         isFetching: false
       })
     })
     .catch(error => {
+      this.setState({ isFetching: false })
       console.log(error)
     })
+  }
+
+  fetchSolution = () => {
+    console.log('isFetching')
+    const {course, done} = this.state
+    axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
+    .then(response => {
+      const classesGrid = response.data
+      this.setState({ 
+        isGridVisible: true,
+        isFetching: false
+      }, this.props.handleSolution(classesGrid))
+    })
+    .catch(error => {
+      this.setState({ isFetching: false })
+      console.log(error)
+    })
+  }
+
+  handleFormSubmit = e => {
+    e.preventDefault()
+    this.setState({ isFetching: true }, this.fetchSolution)
   }
 
   handleChange = item => {
@@ -60,12 +83,6 @@ class StudentForm extends Component {
         done: prevState.done.filter(item => item.codDisciplina !== name)
       }
     });
-  }
-
-  handleFormSubmit = e => {
-    const { done, course } = this.state
-    e.preventDefault()
-    this.props.handleSubmit(course, done)
   }
 
   showDisciplines = () => {
@@ -126,7 +143,7 @@ class StudentForm extends Component {
 }
 
 StudentForm.propTypes = {
-  handleSubmit: PropTypes.func
+  handleSolution: PropTypes.func
 }
 
 export default StudentForm

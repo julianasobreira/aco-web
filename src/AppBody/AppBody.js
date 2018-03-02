@@ -9,35 +9,14 @@ class AppBody extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
   state = {
     classes: [],
-    isGridVisible: false,
-    isFetching: false,
-    classesGrid: {
-      seg: { '8': '', '10': '', '14': '', '16': '' },
-      ter: { '8': '', '10': '', '14': '', '16': '' },
-      qua: { '8': '', '10': '', '14': '', '16': '' },
-      qui: { '8': '', '10': '', '14': '', '16': '' },
-      sex: { '8': '', '10': '', '14': '', '16': '' }
-    }
+    classesGrid: null,
+    isGridVisible: false
   }
 
-  fetchSolutions = (course, done) => {
-    this.setState({ isFetching: true })
-    axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
-    .then(response => {
-      const classes = response.data
-      const { classesGrid } = this.state
-      classes.forEach(classItem => {
-        const { dia, horarioInicial } = classItem
-        classesGrid[dia][horarioInicial] = `${classItem.codOferta} - ${classItem.disciplinaOfertada.nome}`
-      })
-      this.setState({ 
-        isGridVisible: true,
-        isFetching: false,
-        classesGrid
-      })
-    })
-    .catch(error => {
-      console.log(error)
+  fetchSolutions = classesGrid => {
+    this.setState({ 
+      isGridVisible: true,
+      classesGrid
     })
   }
 
@@ -46,23 +25,16 @@ class AppBody extends Component {
   }
 
   render() {
-    const { 
-      isGridVisible, 
-      classesGrid,
-      isFetching,
-      classes } = this.state
-
+    const{ isGridVisible, classesGrid } = this.state
     return (
       <section className='app-body'>
         <div className='app-body-container'>
           { isGridVisible
-            ? <ClassScheduleGrid 
-                classes={classes} 
+            ? <ClassScheduleGrid
                 classesGrid={classesGrid}
                 showClassesGrid={this.showClassesGrid} />
-            : <StudentForm handleSubmit={this.fetchSolutions} />
+            : <StudentForm handleSolution={this.fetchSolutions} />
           }
-          { isFetching && <Loading /> }
         </div>
       </section>
     )
