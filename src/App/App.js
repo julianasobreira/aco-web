@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import AppHeader from './AppHeader/AppHeader';
-import AppSubheader from './AppSubheader/AppSubheader';
-import AppBody from './AppBody/AppBody';
-import Loading from './Loading/Loading'
+import AppHeader from './AppHeader';
+import AppSubheader from './AppSubheader';
+import AppBody from './AppBody';
+import Loading from '../Loading/Loading'
 
 
 class App extends Component {

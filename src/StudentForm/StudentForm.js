@@ -84,7 +84,7 @@ class StudentForm extends Component {
     const { course, classes } = this.state
 
     return (
-      <div>
+      <div className='student-form'>
         <h3>Curso</h3>
         <Select
           name='course'

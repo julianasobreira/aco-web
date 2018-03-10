@@ -2,8 +2,8 @@
   position: relative;
   left: 50%;
   top: 20px;
+  width: 811px;
   transform: translateX(-50%);
-  width: 800px;
 }
 
 .classes-schedule-container {
@@ -12,19 +12,6 @@
   margin-top: 20px;
   border: solid #ccc;
   border-width: 0 1px 1px 0;
-}
-
-
-.classes-schedule-link {
-  margin-bottom: 15px;
-}
-
-.classes-schedule-link a {
-  border-bottom: 1px solid;
-}
-
-.classes-schedule-link a:hover {
-  color: #3b99fc;
 }
 
 .classes-schedule-row--gray,
@@ -40,32 +27,53 @@
   background-color: #efefef; 
 }
 
-.classes-schedule-cell--row-header,
-.classes-schedule-cell--col-header,
-.classes-schedule-cell--first-period,
-.classes-schedule-cell--second-period,
-.classes-schedule-cell--third-period,
-.classes-schedule-cell--fourth-period {
+.classes-schedule-row-header,
+.classes-schedule-header,
+.classes-schedule-cell {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 16.5%;
+  flex-direction: column;
+  width: 135px;
   height: 70px;
   border: solid #ccc;
   border-width: 1px 0 0 1px;
-  font-size: .85em;
+  font-size: .8em;
+  padding: 5px;
   text-transform: capitalize;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.classes-schedule-cell--col-header {
+.classes-schedule-header {
   height: 40px;
   font-size: 1em;
   background-color: #efefef; 
 }
 
-.classes-schedule-cell--row-header {
+.classes-schedule-row-header {
+  font-size: 1em;
+}
+
+.classes-schedule-link {
+  margin-bottom: 15px;
+}
+
+.classes-schedule-link a {
+  border-bottom: 1px solid;
+}
+
+.classes-schedule-link a:hover {
+  color: #3b99fc;
+}
+
+.classes-schedule-time {
+  display: none;
+  font-size: 1.1em;
+  color: #9a9a9a;
+}
+
+.row-header {
+  justify-content: center;
   font-size: 1em;
 }
 
@@ -76,46 +84,33 @@
     flex-direction: column;
   }
 
-  .classes-schedule-cell--row-header,
-  .classes-schedule-cell--col-header,
-  .classes-schedule-cell--first-period,
-  .classes-schedule-cell--second-period,
-  .classes-schedule-cell--third-period,
-  .classes-schedule-cell--fourth-period {
+  .classes-schedule-row-header,
+  .classes-schedule-header,
+  .classes-schedule-cell {
     width: 100%;
   }
 
-  .classes-schedule-cell--col-header:first-child,
+  .classes-schedule-time {
+    display: block;
+  }
+
+  .classes-schedule-header:first-child,
   .row-header {
     display: none;
   }
 
-  /* segunda-feira */
-  .classes-schedule-cell--col-header:nth-child(2),
-  .monday {
-    order: 0;
-  }
-
-  /* terça-feira */
-  .classes-schedule-cell--col-header:nth-child(3),
   .tuesday {
     order: 1;
   }
 
-  /* quarta-feira */
-  .classes-schedule-cell--col-header:nth-child(4),
   .wednesday {
     order: 2;
   }
 
-  /* quinta-feira */
-  .classes-schedule-cell--col-header:nth-child(5),
   .thursday {
     order: 3;
   }
 
-  /* sexta-feira */
-  .classes-schedule-cell--col-header:nth-child(6),
   .friday {
     order: 4;
   }
