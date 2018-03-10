@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
-import './StudentForm.css'
-import Loading from '../Loading/Loading'
-import Select from 'react-select'
-import 'react-select/dist/react-select.css'
-import axios from 'axios'
 import PropTypes from 'prop-types'
+import Select from 'react-select'
+import axios from 'axios'
+
+import './StudentForm.css'
+import 'react-select/dist/react-select.css'
+
+import ClassesList from '../ClassesList/ClassesList'
 
 class StudentForm extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
   state = {
     course: '',
-    isFetching: false,
     classes: null,
     done: []
   }
 
   fetchClasses = () => {
-    this.setState({ isFetching: true })
+    const { isFetching } = this.props
+    isFetching(true)
+
     axios.get(`${this.baseURL}grade?curso=${this.state.course}`)
     .then(response => {
       const classes = response.data
@@ -32,37 +35,29 @@ class StudentForm extends Component {
           courseModules[classItem.ciclo] = [classItem]
         }
       })
-      this.setState({ 
-        classes: courseModules,
-        isFetching: false
-      })
+      this.setState({ classes: courseModules })
+      isFetching(false)
     })
     .catch(error => {
-      this.setState({ isFetching: false })
-      console.log(error)
-    })
-  }
-
-  fetchSolution = () => {
-    console.log('isFetching')
-    const {course, done} = this.state
-    axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
-    .then(response => {
-      const classesGrid = response.data
-      this.setState({ 
-        isGridVisible: true,
-        isFetching: false
-      }, this.props.handleSolution(classesGrid))
-    })
-    .catch(error => {
-      this.setState({ isFetching: false })
-      console.log(error)
+      isFetching(false)
     })
   }
 
   handleFormSubmit = e => {
     e.preventDefault()
-    this.setState({ isFetching: true }, this.fetchSolution)
+    const { isFetching, handleSolution } = this.props
+    const {course, done} = this.state
+
+    isFetching(true)
+    axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
+    .then(response => {
+      const classesGrid = response.data
+      handleSolution(classesGrid)
+      isFetching(false)
+    })
+    .catch(error => {
+      isFetching(false)
+    })
   }
 
   handleChange = item => {
@@ -82,42 +77,11 @@ class StudentForm extends Component {
       return {
         done: prevState.done.filter(item => item.codDisciplina !== name)
       }
-    });
-  }
-
-  showDisciplines = () => {
-    const { classes } = this.state
-    return (
-      <form className='student-form-classes' onSubmit={this.handleFormSubmit}>
-       {
-        Object.keys(classes).map(moduleName =>
-          <div key={moduleName}>
-            <h4>{moduleName}</h4>
-            {
-              classes[moduleName].map(item =>
-                <div key={item.codDisciplina}>
-                  <input
-                    name={item.codDisciplina}
-                    type='checkbox'
-                    value={item.codDisciplina}
-                    onChange={e => this.handleInputChange(e, item)} />
-                  <span>{`${item.codDisciplina} - ${item.nome}`}</span>
-                </div>   
-              )
-            }
-          </div>
-        )
-       }
-       <button className='student-form-button' type='submit'>Gerar grade</button>
-      </form> 
-    )
+    })
   }
 
   render() {
-    const { 
-      course, 
-      classes,
-      isFetching } = this.state
+    const { course, classes } = this.state
 
     return (
       <div>
@@ -130,20 +94,18 @@ class StudentForm extends Component {
             { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
           ]}
         />
-        { classes &&
-          <div>
-            <h3>Disciplinas Cursadas</h3>
-            {this.showDisciplines()}
-          </div>
-        }
-        { isFetching && <Loading /> }
+        <ClassesList 
+          classes={ classes } 
+          handleFormSubmit={ this.handleFormSubmit }
+        />
       </div>
     )
   }
 }
 
 StudentForm.propTypes = {
-  handleSolution: PropTypes.func
+  handleSolution: PropTypes.func,
+  isFetching: PropTypes.func
 }
 
 export default StudentForm

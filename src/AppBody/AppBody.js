@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import PropTypes from 'prop-types'
+
 import './AppBody.css'
+
 import StudentForm from '../StudentForm/StudentForm'
 import Loading from '../Loading/Loading'
 import ClassScheduleGrid from '../ClassScheduleGrid/ClassScheduleGrid'
-import axios from 'axios'
+
 
 class AppBody extends Component {
   baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
@@ -33,12 +37,18 @@ class AppBody extends Component {
             ? <ClassScheduleGrid
                 classesGrid={classesGrid}
                 showClassesGrid={this.showClassesGrid} />
-            : <StudentForm handleSolution={this.fetchSolutions} />
+            : <StudentForm 
+                handleSolution={this.fetchSolutions}
+                isFetching={this.props.isFetching} />
           }
         </div>
       </section>
     )
   }
+}
+
+StudentForm.propTypes = {
+  isFetching: PropTypes.func
 }
 
 export default AppBody
