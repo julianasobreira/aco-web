@@ -9,7 +9,6 @@ import 'react-select/dist/react-select.css'
 import ClassesList from '../ClassesList/ClassesList'
 
 class StudentForm extends Component {
-  baseURL = 'https://quiet-wave-46823.herokuapp.com/api/v1.0/'
   state = {
     course: '',
     classes: null,
@@ -20,7 +19,7 @@ class StudentForm extends Component {
     const { isFetching } = this.props
     isFetching(true)
 
-    axios.get(`${this.baseURL}grade?curso=${this.state.course}`)
+    axios.get(`${process.env.API_URL}grade?curso=${this.state.course}`)
     .then(response => {
       const classes = response.data
       const courseModules = {}
@@ -49,7 +48,7 @@ class StudentForm extends Component {
     const {course, done} = this.state
 
     isFetching(true)
-    axios.post(`${this.baseURL}solucao?curso=${course}&semestre=2017.1`, done)
+    axios.post(`${process.env.API_URL}solucao?curso=${course}&semestre=2017.1`, done)
     .then(response => {
       const classesGrid = response.data
       handleSolution(classesGrid)
