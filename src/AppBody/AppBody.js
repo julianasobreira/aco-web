@@ -6,7 +6,7 @@ import './AppBody.css'
 
 import StudentForm from '../StudentForm/StudentForm'
 import Loading from '../Loading/Loading'
-import ClassScheduleGrid from '../ClassScheduleGrid/ClassScheduleGrid'
+import ClassSchedule from '../ClassSchedule/ClassSchedule'
 
 
 class AppBody extends Component {
@@ -34,7 +34,7 @@ class AppBody extends Component {
       <section className='app-body'>
         <div className='app-body-container'>
           { isGridVisible
-            ? <ClassScheduleGrid
+            ? <ClassSchedule
                 classesGrid={classesGrid}
                 showClassesGrid={this.showClassesGrid} />
             : <StudentForm 

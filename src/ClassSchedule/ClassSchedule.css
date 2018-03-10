@@ -1,0 +1,126 @@
+.classes-schedule {
+  position: relative;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  width: 800px;
+}
+
+.classes-schedule-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  border: solid #ccc;
+  border-width: 0 1px 1px 0;
+}
+
+
+.classes-schedule-link {
+  margin-bottom: 15px;
+}
+
+.classes-schedule-link a {
+  border-bottom: 1px solid;
+}
+
+.classes-schedule-link a:hover {
+  color: #3b99fc;
+}
+
+.classes-schedule-row--gray,
+.classes-schedule-row--header,
+.classes-schedule-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.classes-schedule-row--gray,
+.classes-schedule-row--header {
+  background-color: #efefef; 
+}
+
+.classes-schedule-cell--row-header,
+.classes-schedule-cell--col-header,
+.classes-schedule-cell--first-period,
+.classes-schedule-cell--second-period,
+.classes-schedule-cell--third-period,
+.classes-schedule-cell--fourth-period {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16.5%;
+  height: 70px;
+  border: solid #ccc;
+  border-width: 1px 0 0 1px;
+  font-size: .85em;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.classes-schedule-cell--col-header {
+  height: 40px;
+  font-size: 1em;
+  background-color: #efefef; 
+}
+
+.classes-schedule-cell--row-header {
+  font-size: 1em;
+}
+
+@media (max-width: 850px) {
+  .classes-schedule-row--gray,
+  .classes-schedule-row--header,
+  .classes-schedule-row {
+    flex-direction: column;
+  }
+
+  .classes-schedule-cell--row-header,
+  .classes-schedule-cell--col-header,
+  .classes-schedule-cell--first-period,
+  .classes-schedule-cell--second-period,
+  .classes-schedule-cell--third-period,
+  .classes-schedule-cell--fourth-period {
+    width: 100%;
+  }
+
+  .classes-schedule-cell--col-header:first-child,
+  .row-header {
+    display: none;
+  }
+
+  /* segunda-feira */
+  .classes-schedule-cell--col-header:nth-child(2),
+  .monday {
+    order: 0;
+  }
+
+  /* terça-feira */
+  .classes-schedule-cell--col-header:nth-child(3),
+  .tuesday {
+    order: 1;
+  }
+
+  /* quarta-feira */
+  .classes-schedule-cell--col-header:nth-child(4),
+  .wednesday {
+    order: 2;
+  }
+
+  /* quinta-feira */
+  .classes-schedule-cell--col-header:nth-child(5),
+  .thursday {
+    order: 3;
+  }
+
+  /* sexta-feira */
+  .classes-schedule-cell--col-header:nth-child(6),
+  .friday {
+    order: 4;
+  }
+
+  .classes-schedule {
+    width: 100%;
+  }
+}
