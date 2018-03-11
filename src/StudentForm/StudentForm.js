@@ -12,6 +12,8 @@ class StudentForm extends Component {
   state = {
     course: '',
     classes: null,
+    semester: null,
+    semesters: [],
     done: []
   }
 
@@ -59,10 +61,14 @@ class StudentForm extends Component {
     })
   }
 
-  handleChange = item => {
+  selectCourse = item => {
     this.setState({
       course: item.value
     }, this.fetchClasses)
+  }
+
+  selectCourse = item => {
+    this.setState({ semester: item.value })
   }
 
   handleInputChange = (e, item) => {
@@ -80,7 +86,7 @@ class StudentForm extends Component {
   }
 
   render() {
-    const { course, classes } = this.state
+    const { course, classes, semesters } = this.state
 
     return (
       <div className='student-form'>
@@ -88,10 +94,17 @@ class StudentForm extends Component {
         <Select
           name='course'
           value={course}
-          onChange={this.handleChange}
+          onChange={this.selectCourse}
           options={[
             { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
           ]}
+        />
+        <h3>Ofertas</h3>
+        <Select
+          name='semester'
+          value={semesters[0] || ''}
+          onChange={this.selectSemester}
+          options={semesters}
         />
         <ClassesList 
           classes={ classes } 
