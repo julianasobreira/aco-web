@@ -21,3 +21,24 @@
 .student-form-button:focus {
   outline: none;
 }
+
+.student-form-list span {
+  margin-left: 1em;
+}
+
+.student-form-list h4 {
+  color: #9a9a9a;
+  font-weight: 400;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+.student-form-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.student-form-list-item input {
+  width: 20px;
+  margin: 0 10px 0 0;
+}

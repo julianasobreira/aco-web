@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import './ClassesList.css'
-
 const ClassesList = ({ classes, handleInputChange }) => {
   if (!classes) {
     return null
@@ -16,7 +14,7 @@ const ClassesList = ({ classes, handleInputChange }) => {
           <h4>{moduleName}</h4>
           {
             classes[moduleName].map(item =>
-              <div className='classes-list-item' key={item.codDisciplina}>
+              <div className='student-form-list-item' key={item.codDisciplina}>
                 <input
                   name={item.codDisciplina}
                   type='checkbox'

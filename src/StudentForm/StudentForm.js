@@ -6,7 +6,7 @@ import axios from 'axios'
 import './StudentForm.css'
 import 'react-select/dist/react-select.css'
 
-import ClassesList from '../ClassesList/ClassesList'
+import ClassesList from './ClassesList'
 
 class StudentForm extends Component {
   state = {
