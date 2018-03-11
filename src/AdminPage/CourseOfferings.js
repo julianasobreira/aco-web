@@ -13,20 +13,20 @@ class CourseOfferings extends Component {
   componentDidMount () {
     this.setState({
       handsontableData: [['oi', '', '', 'segu']]
-    })
+    }, this.validateCells)
   }
 
   validateCells = () => {
-    this.table.hotInstance.validateCells(function(valid) {
-      console.log('first validation', valid)
-    })
+    this.table.hotInstance.validateCells()
   }
 
   handleSubmit = () => {
-    this.validateCells()
-    const cleanedTable = this.state.handsontableData
-      .filter((row, index) => !this.table.hotInstance.isEmptyRow(index))
-    console.log(cleanedTable)
+    this.setState(prevState => ({
+      handsontableData: [
+        ...prevState.handsontableData
+          .filter((row, index) => !this.table.hotInstance.isEmptyRow(index))
+      ]
+    }), this.validateCells)
   }
 
   render() {
@@ -41,19 +41,12 @@ class CourseOfferings extends Component {
           minCols='4' 
           width='800'
           stretchH='all'
-          minSpareRows='1'
           columns={[
             {
-              validator: (value, callback) => {
-                console.log(value)
-                callback(!!value);
-              }
+              type: 'text'
             },
             {
-              validator: (value, callback) => {
-                console.log(value)
-                callback(!!value);
-              }
+              validator: (value, callback) => callback(!!value)
             },
             {
               type: 'dropdown',
@@ -68,7 +61,12 @@ class CourseOfferings extends Component {
               type: 'dropdown',
               source: ['seg', 'ter', 'qua', 'qui', 'sex']
             }
-          ]} />
+          ]}
+          beforeValidate={ (val, row, prop) => {
+            if (this.table.hotInstance.isEmptyRow(row)) {
+              return 0
+            }
+          }} />
           <button onClick={this.handleSubmit}>submit</button>
       </div>
     )
