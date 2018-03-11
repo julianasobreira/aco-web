@@ -1,49 +1,28 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import PropTypes from 'prop-types'
+import { Route, Switch } from 'react-router-dom';
 
-import StudentForm from '../StudentForm/StudentForm'
-import Loading from '../Loading/Loading'
-import ClassSchedule from '../ClassSchedule/ClassSchedule'
+import StudentPage from '../StudentPage/StudentPage'
+import AdminPage from '../AdminPage/AdminPage'
 
-class AppBody extends Component {
-  state = {
-    classes: [],
-    classesGrid: null,
-    isGridVisible: false
-  }
-
-  fetchSolutions = classesGrid => {
-    this.setState({ 
-      isGridVisible: true,
-      classesGrid
-    })
-  }
-
-  showClassesGrid = () => {
-    this.setState({ isGridVisible: false })
-  }
-
-  render() {
-    const{ isGridVisible, classesGrid } = this.state
-    return (
-      <section className='app-body'>
-        <div className='app-body-container'>
-          { isGridVisible
-            ? <ClassSchedule
-                classesGrid={classesGrid}
-                showClassesGrid={this.showClassesGrid} />
-            : <StudentForm 
-                handleSolution={this.fetchSolutions}
-                isFetching={this.props.isFetching} />
-          }
-        </div>
-      </section>
-    )
-  }
+const AppBody = ({ isFetching }) => {
+  return (
+    <section className='app-body'>
+      <div className='app-body-container'>
+        <Switch>
+          <Route exact path='/' render={ props => (
+            <StudentPage {...props} isFetching={isFetching} />
+          )}/>
+          <Route path='/admin' render={ props => (
+            <AdminPage {...props} isFetching={isFetching} />
+          )}/>
+        </Switch>
+      </div>
+    </section>
+  )
 }
 
-StudentForm.propTypes = {
+AppBody.propTypes = {
   isFetching: PropTypes.func
 }
 
