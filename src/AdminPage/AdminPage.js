@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import './Admin.css';
+import React, { Component } from 'react'
+
+import './AdminPage.css'
+import CourseOfferings from './CourseOfferings'
 
 class Admin extends Component {
   render() {
     return (
-      <div className="Admin">
-        <form className="Admin-container">
-          <input type="email" placeholder="Email"/>
-          <input type="password" placeholder="Senha"/>
-          <button>Admin</button>
-        </form>
+      <div className="admin-page">
+        <CourseOfferings />
       </div>
     )
   }
 }
 
-export default Admin;
+export default Admin
