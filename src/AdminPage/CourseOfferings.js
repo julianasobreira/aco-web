@@ -20,11 +20,13 @@ class CourseOfferings extends Component {
     this.table.hotInstance.validateCells(function(valid) {
       console.log('first validation', valid)
     })
+  }
+
+  handleSubmit = () => {
+    this.validateCells()
     const cleanedTable = this.state.handsontableData
       .filter((row, index) => !this.table.hotInstance.isEmptyRow(index))
-    this.setState({
-      handsontableData: [...cleanedTable]
-    })
+    console.log(cleanedTable)
   }
 
   render() {
@@ -67,7 +69,7 @@ class CourseOfferings extends Component {
               source: ['seg', 'ter', 'qua', 'qui', 'sex']
             }
           ]} />
-          <button onClick={this.validateCells}>submit</button>
+          <button onClick={this.handleSubmit}>submit</button>
       </div>
     )
   }
