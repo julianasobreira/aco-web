@@ -9,21 +9,12 @@
   font-size: 0.9em;
 }
 
-.classes-list-button {
-  margin: 40px 0;
-  color: #fff;
-  background-color: #3b99fc;
-  padding: 10px;
-  font-size: 1.2em;
-  border: none;
-  border-radius: .14rem;
-  transition: all .3s linear;
+.classes-list-item {
+  display: flex;
+  align-items: center;
 }
 
-.classes-list-button:hover {
-    box-shadow: 0 .1rem .4rem rgba(0,0,0,0.2), 0 .1rem .4rem rgba(0,0,0,0.2);
-  }
-
-.classes-list-button:focus {
-  outline: none;
+.classes-list-item input {
+  width: 20px;
+  margin: 0 10px 0 0;
 }
