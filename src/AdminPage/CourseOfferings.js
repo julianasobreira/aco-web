@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom';
+import { findDOMNode } from 'react-dom'
+import PropTypes from 'prop-types'
 import HotTable from 'react-handsontable'
 
 class CourseOfferings extends Component {
-  handsontableData = [[]];
-  hotTable = null
-  cleanedTable = []
-  state = {
-    handsontableData: [[]]
-  }
-
-  componentDidMount () {
-    this.setState({
-      handsontableData: [['oi', '', '', 'segu']]
-    }, this.validateCells)
-  }
-
   validateCells = () => {
     this.table.hotInstance.validateCells()
+  }
+
+  componentDidUpdate () {
+    this.validateCells()
   }
 
   handleSubmit = () => {
@@ -35,8 +27,8 @@ class CourseOfferings extends Component {
         <HotTable 
           root='hot'
           ref={(table) => { this.table = table; }}
-          data={this.state.handsontableData} 
-          colHeaders={['Código de Oferta', 'Nome da Disciplina', 'Horário', 'Dia']}
+          data={this.props.xlsx} 
+          colHeaders={['Código de Oferta', 'Nome da Disciplina', 'Dia', 'Horário']}
           rowHeaders={true}
           minCols='4' 
           width='800'
@@ -50,16 +42,17 @@ class CourseOfferings extends Component {
             },
             {
               type: 'dropdown',
-              source: [
-                '08:00 - 10:00',
-                '10:00 - 12:00',
-                '14:00 - 16:00',
-                '16:00 - 18:00'
-              ]
+              source: ['seg', 'ter', 'qua', 'qui', 'sex']
             },
             {
               type: 'dropdown',
-              source: ['seg', 'ter', 'qua', 'qui', 'sex']
+              source: [
+                '8',
+                '10',
+                '12',
+                '14',
+                '16'
+              ]
             }
           ]}
           beforeValidate={ (val, row, prop) => {
@@ -71,6 +64,10 @@ class CourseOfferings extends Component {
       </div>
     )
   }
+}
+
+CourseOfferings.propTypes = {
+  xlsx: PropTypes.array
 }
 
 export default CourseOfferings
