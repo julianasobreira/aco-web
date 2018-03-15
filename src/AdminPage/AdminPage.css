@@ -1,0 +1,69 @@
+.admin-page {
+  width: 100%;
+}
+
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-input {
+  display: none;
+}
+
+.admin-page-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 10rem;
+  
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  margin: 20px 0;
+  background-color: #0071cd;
+  border: none;
+  border-radius: .14rem;    
+
+  cursor: pointer;
+  transition: all .3s linear;
+}
+
+.admin-page-button:hover {
+  box-shadow: 0 .1rem .4rem rgba(0,0,0,0.2), 0 .1rem .4rem rgba(0,0,0,0.2);
+}
+
+.admin-page-button:focus {
+  outline: none;
+}
+
+.admin-page-button:disabled {
+  background-color: #ccc;
+}
+
+.admin-page-button:active {
+  background-color: #0054a6;
+}
+
+.admin-page-link {
+  color: #0f4097;
+  cursor: pointer;
+}
+
+.admin-page-error {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  margin: 20px 0;
+  background-color: #f3bcbc;
+  color: #333;
+}
+
+.admin-page-link:hover {
+  border-bottom: solid 1px #0f4097;
+}
