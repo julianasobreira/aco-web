@@ -1,5 +1,5 @@
 .admin-page {
-  width: 100%;
+  width: 700px;
 }
 
 .admin-page-header {
@@ -66,4 +66,9 @@
 
 .admin-page-link:hover {
   border-bottom: solid 1px #0f4097;
+}
+
+.admin-page-button a {
+  color: #fff;
+  text-decoration: none;
 }

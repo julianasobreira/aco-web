@@ -43,7 +43,7 @@
 }
 
 .app-header-container {
-  max-width: 800px;
+  max-width: 700px;
   padding: 0 30px;
   text-align: center;
 }
@@ -79,7 +79,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 800px;
+  width: 700px;
 }
 
 .app-subheader__link {
@@ -100,8 +100,9 @@
 }
 
 .app-body-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 800px;
+  max-width: 700px;
 }
