@@ -72,3 +72,9 @@
   color: #fff;
   text-decoration: none;
 }
+
+.course-offerings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

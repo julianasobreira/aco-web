@@ -8,7 +8,12 @@ class CourseOfferings extends Component {
   render() {
     return (
       <div className='course-offerings'>
-        <p>Ofertas</p>
+        <div className='course-offerings-header'>
+          <h1>Ofertas</h1>
+          <div className='admin-page-button'>
+            <Link to='/admin/ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
+          </div>
+        </div>
         <ul>
           {
             this.state.courseOfferings.map((item, index) => (
@@ -16,9 +21,6 @@ class CourseOfferings extends Component {
             ))
           }
         </ul>
-        <div className='admin-page-button'>
-          <Link to='/admin/ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
-        </div>
       </div>
     )
   }
