@@ -56,3 +56,9 @@ form .message a {
 form .register-form {
   display: none;
 }
+
+.login-error {
+  color: #f00;
+  margin-bottom: 10px;
+  text-align: center;
+}

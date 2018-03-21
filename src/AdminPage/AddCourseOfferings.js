@@ -73,7 +73,7 @@ class AddCourseOfferings extends Component {
           colHeaders={['Código de Oferta', 'Nome da Disciplina', 'Dia', 'Horário']}
           rowHeaders={true}
           minCols='4' 
-          width='800'
+          width='700'
           stretchH='all'
           columns={[
             {

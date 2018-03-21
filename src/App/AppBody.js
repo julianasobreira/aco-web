@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Route, Switch } from 'react-router-dom';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { isLoggedIn } from '../utils/auth'
 import StudentPage from '../StudentPage/StudentPage'
 import AdminPage from '../AdminPage/AdminPage'
 
@@ -13,9 +13,18 @@ const AppBody = ({ isFetching }) => {
           <Route exact path='/' render={ props => (
             <StudentPage {...props} isFetching={isFetching} />
           )}/>
-          <Route path='/admin' render={ props => (
-            <AdminPage {...props} isFetching={isFetching} />
-          )}/>
+          <Route path='/admin' render={ props => {
+            return ( 
+              isLoggedIn()
+                ? <AdminPage {...props} isFetching={isFetching} />
+                : <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+            )
+          }}/>
         </Switch>
       </div>
     </section>
