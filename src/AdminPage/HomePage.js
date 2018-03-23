@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import classIcon from '../static/class.png'
-import scheduleIcon from '../static/schedule.png'
 
 const HomePage = ({match}) => {
   return (
