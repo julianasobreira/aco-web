@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import leftArrow from '../static/left-arrow.png'
 import { Link } from 'react-router-dom'
 
 class CourseOfferings extends Component {
@@ -12,7 +11,7 @@ class CourseOfferings extends Component {
         <div className='course-offerings-header'>
           <div className='header-title'>
             <Link to='/admin'>
-              <img src={leftArrow} className='header-icon'/>
+              <i className='fa fa-arrow-left'></i>
             </Link>
             <h2>Ofertas</h2>
           </div>

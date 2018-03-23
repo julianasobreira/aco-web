@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import leftArrow from '../static/left-arrow.png'
 import { Link } from 'react-router-dom'
 import HotTable from 'react-handsontable'
 import XLSX from 'xlsx'
@@ -58,7 +57,7 @@ class AddCourseOfferings extends Component {
         <div className='admin-page-header'>
           <div className='header-title'>
             <Link to='/admin/ofertas'>
-              <img src={leftArrow} className='header-icon'/>
+              <i className='fa fa-arrow-left'></i>
             </Link>
             <h2>Adicionar Oferta</h2>
           </div>

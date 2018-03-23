@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import loginIcon from '../static/noun_29782.svg'
+import { clearToken } from '../utils/auth'
 
 class AppHeader extends Component {
+  handleLogout = () => {
+    clearToken()
+  }
+
   render() {
     const {pathname} = this.props.location
     return (
@@ -16,10 +20,15 @@ class AppHeader extends Component {
             Maximização do horário do aluno por meta-heurística
           </p>
         </div>
-        { !/^\/admin.*$/.test(pathname) &&
-          <Link to='/login' className='login-button'>
-            <img src={loginIcon} alt="login"/>
-          </Link>
+        { !/^\/admin.*$/.test(pathname)
+          ? <Link to='/login' className='login-button'>
+              Login
+              <i className="fa fa-sign-in"></i>
+            </Link>
+          : <a href='' className='login-button' onClick={this.handleLogout}>
+              Logout
+              <i className="fa fa-sign-out"></i>
+            </a>
         }
       </header>
     );

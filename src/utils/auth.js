@@ -1,15 +1,11 @@
 import decode from 'jwt-decode'
 const ACCESS_TOKEN_KEY = 'access_token'
 
-export const logout = () => {
-  
-}
-
 export const getToken = () => {
   return localStorage.getItem(ACCESS_TOKEN_KEY)
 }
 
-const clearToken = () => {
+export const clearToken = () => {
   localStorage.removeItem(ACCESS_TOKEN_KEY)
 }
 

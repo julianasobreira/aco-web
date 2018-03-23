@@ -19,7 +19,7 @@ const AppBody = ({ isFetching }) => {
                 ? <AdminPage {...props} isFetching={isFetching} />
                 : <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: '/',
                     state: { from: props.location }
                   }}
                 />

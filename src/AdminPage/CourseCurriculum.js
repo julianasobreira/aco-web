@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import HotTable from 'react-handsontable'
 import XLSX from 'xlsx'
-import leftArrow from '../static/left-arrow.png'
 import { Link } from 'react-router-dom'
 
 class CourseCurriculum extends Component {
@@ -58,7 +57,7 @@ class CourseCurriculum extends Component {
         <div className='admin-page-header'>
           <div className='header-title'>
             <Link to='/admin'>
-              <img src={leftArrow} className='header-icon'/>
+              <i className='fa fa-arrow-left'></i>
             </Link>
             <h2>Grade Curricular</h2>
           </div>
@@ -71,7 +70,7 @@ class CourseCurriculum extends Component {
             onChange={this.handleFileUpload} />
           <label
             htmlFor='upload-planilha'
-            className='admin-page-link'>Upload Oferta</label>
+            className='admin-page-link'>Upload Grade Curricular</label>
         </div>
         <HotTable 
           root='hot'

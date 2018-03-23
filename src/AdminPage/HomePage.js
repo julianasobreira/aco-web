@@ -7,11 +7,11 @@ const HomePage = ({match}) => {
   return (
     <div className='home-page'>
       <Link className='home-page-card' to='/admin/ofertas'>
-          <img className='home-page-card-image' src={classIcon} alt=""/>
-          Ofertas
+        <i className="fa fa-calendar"></i>
+        Ofertas
       </Link>
       <Link to='/admin/grade' className='home-page-card'>
-        <img className='home-page-card-image' src={scheduleIcon} alt=""/>
+        <i className="fa fa-graduation-cap"></i>
         Grade Curricular
       </Link>
     </div>

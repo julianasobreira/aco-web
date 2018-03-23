@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
 import './App.css';
-
 import AppHeader from './AppHeader';
 import AppSubheader from './AppSubheader';
 import AppBody from './AppBody';
 import Loading from '../Loading/Loading'
-
+require('font-awesome/css/font-awesome.css')
 
 class App extends Component {
   state = { isFetching: false }
@@ -18,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <div className='app'>
-        <AppHeader location={this.props.location}/>
+        <AppHeader location={this.props.location} />
         <AppSubheader />
         <AppBody isFetching={this.isFetching} />
         { this.state.isFetching && <Loading /> }
