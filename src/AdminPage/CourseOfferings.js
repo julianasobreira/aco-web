@@ -11,7 +11,7 @@ class CourseOfferings extends Component {
         <div className='course-offerings-header'>
           <h1>Ofertas</h1>
           <div className='admin-page-button'>
-            <Link to='/admin/ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
+            <Link to='/admin/add-ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
           </div>
         </div>
         <ul>

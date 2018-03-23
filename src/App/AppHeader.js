@@ -14,7 +14,7 @@ class AppHeader extends Component {
             Maximização do horário do aluno por meta-heurística
           </p>
         </div>
-        { pathname !== '/admin' &&
+        { !/^\/admin.*$/.test(pathname) &&
           <Link to='/login' className='login-button'>
             <img src={loginIcon} alt="login"/>
           </Link>

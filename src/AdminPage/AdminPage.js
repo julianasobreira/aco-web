@@ -9,7 +9,8 @@ const Admin = ({match}) => {
   return (
     <div className='admin-page'>
       <Switch>
-        <Route path={match.url + '/ofertas'} component={AddCourseOfferings}/>
+        <Route path={match.url + '/ofertas'} component={CourseOfferings}/>
+        <Route path={match.url + '/add-ofertas'} component={AddCourseOfferings}/>
         <Route exact path={match.url} component={HomePage}/>
       </Switch>
     </div>
