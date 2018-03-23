@@ -10,7 +10,7 @@ const HomePage = ({match}) => {
           <img className='home-page-card-image' src={classIcon} alt=""/>
           Ofertas
       </Link>
-      <Link to='/admin/ofertas' className='home-page-card'>
+      <Link to='/admin/grade' className='home-page-card'>
         <img className='home-page-card-image' src={scheduleIcon} alt=""/>
         Grade Curricular
       </Link>

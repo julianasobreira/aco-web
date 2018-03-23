@@ -103,3 +103,15 @@
   width: 90px;
   margin-bottom: 10px;
 }
+
+.header-icon {
+  width: 20px;
+  margin-right: 15px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+
+}
+

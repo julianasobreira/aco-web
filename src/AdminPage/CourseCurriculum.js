@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import leftArrow from '../static/left-arrow.png'
-import { Link } from 'react-router-dom'
 import HotTable from 'react-handsontable'
 import XLSX from 'xlsx'
+import leftArrow from '../static/left-arrow.png'
+import { Link } from 'react-router-dom'
 
-class AddCourseOfferings extends Component {
+class CourseCurriculum extends Component {
   state = {
     xlsx: [[]],
     isValid: false,
@@ -57,10 +57,10 @@ class AddCourseOfferings extends Component {
       <div>
         <div className='admin-page-header'>
           <div className='header-title'>
-            <Link to='/admin/ofertas'>
+            <Link to='/admin'>
               <img src={leftArrow} className='header-icon'/>
             </Link>
-            <h2>Adicionar Oferta</h2>
+            <h2>Grade Curricular</h2>
           </div>
           <input
             type='file'
@@ -113,4 +113,4 @@ class AddCourseOfferings extends Component {
   }
 }
 
-export default AddCourseOfferings
+export default CourseCurriculum

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import leftArrow from '../static/left-arrow.png'
 import { Link } from 'react-router-dom'
 
 class CourseOfferings extends Component {
@@ -9,9 +10,11 @@ class CourseOfferings extends Component {
     return (
       <div className='course-offerings'>
         <div className='course-offerings-header'>
-          <h1>Ofertas</h1>
-          <div className='admin-page-button'>
-            <Link to='/admin/add-ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
+          <div className='header-title'>
+            <Link to='/admin'>
+              <img src={leftArrow} className='header-icon'/>
+            </Link>
+            <h2>Ofertas</h2>
           </div>
         </div>
         <ul>
@@ -21,6 +24,9 @@ class CourseOfferings extends Component {
             ))
           }
         </ul>
+        <div className='admin-page-button'>
+          <Link to='/admin/add-ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
+        </div>
       </div>
     )
   }
