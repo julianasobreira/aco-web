@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { setToken } from '../utils/auth'
 import axios from 'axios'
-import { Redirect } from "react-router-dom"
+import { setToken } from '../utils/auth'
+import { Redirect } from 'react-router-dom'
+import Loading from '../Loading/Loading'
 import './Login.css';
 
 class Login extends Component {
@@ -9,7 +10,8 @@ class Login extends Component {
     login: null,
     senha: null,
     loginSuccess: false,
-    loginFail: false
+    loginFail: false,
+    isFetching: false
   }
 
   handleLogin = e => {
@@ -27,36 +29,47 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const { senha, login } = this.state
+    this.setState({
+      isFetching: true
+    })
     axios.post(`${process.env.API_URL}/login`, {login, senha})
       .then(response => {
         setToken(response.data)
         this.setState({
           loginSuccess: true,
-          loginError: false
+          loginError: false,
+          isFetching: false
         })
       })
       .catch(() => {
-        this.setState({loginError: true})
+        this.setState({
+          loginError: true,
+          isFetching: false
+        })
       })
   }
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: "/admin" } }
+    const { from } = this.props.location.state || { from: { pathname: '/admin' } }
 
     if (this.state.loginSuccess) {
       return <Redirect to={from} />;
     }
 
     return (
-      <div className="login" onSubmit={this.handleSubmit}>
-        <form className="login-container" >
-          <input type="text" placeholder="Login" onChange={this.handleLogin}/>
-          <input type="password" placeholder="Senha" onChange={this.handleSenha}/>
+      <div className='login' onSubmit={this.handleSubmit}>
+        <form className='login-container' >
+          <h2 className='login-container-title'>Administrador</h2>
+          <input type='text' placeholder='Login' onChange={this.handleLogin}/>
+          <input type='password' placeholder='Senha' onChange={this.handleSenha}/>
           { this.state.loginError &&
             <div className='login-error'>Ocorreu um erro durante a operação</div>
           }
           <button>login</button>
         </form>
+        { this.state.isFetching &&
+          <Loading />
+        }
       </div>
     )
   }

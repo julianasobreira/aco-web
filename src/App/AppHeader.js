@@ -9,7 +9,9 @@ class AppHeader extends Component {
     return (
       <header className='app-header'>
         <div className='app-header-container'>
-          <h1>Horário Universitário Personalizado</h1>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            <h1>Horário Universitário Personalizado</h1>
+          </Link>
           <p>
             Maximização do horário do aluno por meta-heurística
           </p>
