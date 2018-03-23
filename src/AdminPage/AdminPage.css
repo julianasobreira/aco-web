@@ -78,3 +78,28 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.home-page {
+  display: flex;
+  justify-content: center;
+}
+
+.home-page-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 200px;
+  width: 200px;
+  color: #1659bf;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 20px 30px;
+  border: solid 1px #1659bf;
+}
+
+.home-page-card-image {
+  height: 90px;
+  width: 90px;
+  margin-bottom: 10px;
+}
