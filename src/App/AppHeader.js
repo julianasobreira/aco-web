@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom'
 import { clearToken } from '../utils/auth'
 
 class AppHeader extends Component {
-  handleLogout = () => {
-    clearToken()
-  }
-
   render() {
     const {pathname} = this.props.location
     return (
@@ -25,7 +21,7 @@ class AppHeader extends Component {
               Login
               <i className="fa fa-sign-in"></i>
             </Link>
-          : <a href='' className='login-button' onClick={this.handleLogout}>
+          : <a href='' className='login-button' onClick={clearToken}>
               Logout
               <i className="fa fa-sign-out"></i>
             </a>

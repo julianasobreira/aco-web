@@ -110,11 +110,11 @@
 .login-button {
   display: flex;
   color: #fff;
-  font-size: 1rem;
+  font-size: .9rem;
   text-decoration: none;
 }
 
 .login-button i {
-  font-size: 1.4rem;
+  font-size: 1rem;
   margin-left: 7px;
 }
