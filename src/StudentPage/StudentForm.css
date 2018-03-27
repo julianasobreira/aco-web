@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.student-form-select {
+  width: 500px;
+}
+
 .student-form-button {
   margin: 40px 0;
   color: #fff;
@@ -41,4 +45,12 @@
 .student-form-list-item input {
   width: 20px;
   margin: 0 10px 0 0;
+}
+
+.message-error {
+  margin-top: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #f33;
+  background-color: #fee;
 }

@@ -11,21 +11,25 @@ import ClassesList from './ClassesList'
 class StudentForm extends Component {
   state = {
     course: '',
+    courses: [
+      { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
+    ],
     classes: null,
-    semester: null,
-    semesters: [],
-    done: []
+    semester: '',
+    semesters: null,
+    done: [],
+    messageErrors: [] 
   }
 
   fetchClasses = () => {
     const { isFetching } = this.props
     isFetching(true)
 
-    axios.get(`${process.env.API_URL}grade?curso=${this.state.course}`)
+    axios.get(`${process.env.API_URL}/curso?nome=${this.state.course}`)
     .then(response => {
-      const classes = response.data
+      const { disciplinas, semestres } = response.data
       const courseModules = {}
-      classes.forEach(classItem => {
+      disciplinas.forEach(classItem => {
         // divindindo as disciplinas por ciclo
         if (courseModules[classItem.ciclo]) {
           courseModules[classItem.ciclo] = [
@@ -36,21 +40,39 @@ class StudentForm extends Component {
           courseModules[classItem.ciclo] = [classItem]
         }
       })
-      this.setState({ classes: courseModules })
+      this.setState({
+        classes: courseModules,
+        semesters: semestres.map(semester => ({ value: semester, label: semester }))
+      })
       isFetching(false)
     })
     .catch(error => {
       isFetching(false)
+      this.setState({ fetchError: false })
     })
   }
 
   handleFormSubmit = e => {
     e.preventDefault()
     const { isFetching, handleSolution } = this.props
-    const {course, done} = this.state
+    const {course, done, semester} = this.state
 
+    this.setState(prevState => {
+      const messageErrors = []
+      if (!semester) {
+        messageErrors.push('Escolha uma oferta')
+      }
+
+      if (done.length === 0) {
+        messageErrors.push('Selecione as disciplinas que você cursou')
+      }
+
+      return { messageErrors }
+    })
+
+    return
     isFetching(true)
-    axios.post(`${process.env.API_URL}solucao?curso=${course}&semestre=2017.1`, done)
+    axios.post(`${process.env.API_URL}/solucao?curso=${course}&semestre=${semester}`, done)
     .then(response => {
       const classesGrid = response.data
       handleSolution(classesGrid)
@@ -86,33 +108,53 @@ class StudentForm extends Component {
   }
 
   render() {
-    const { course, classes, semesters } = this.state
+    const {
+      course,
+      courses,
+      classes,
+      semester,
+      semesters,
+      messageErrors } = this.state
 
+    console.log(semesters)
     return (
       <div className='student-form'>
         <h3>Curso</h3>
         <Select
+          className='student-form-select'
           name='course'
           value={course}
           onChange={this.handleSelectCourse}
-          options={[
-            { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
-          ]}
+          options={courses}
         />
-        <h3>Ofertas</h3>
-        <Select
-          name='semester'
-          value={semesters[0] || ''}
-          onChange={this.handleSelectSemester}
-          options={semesters}
-        />
-        <h3>Disciplinas Cursadas</h3>
-        <form className='student-form-list' onSubmit={this.handleFormSubmit}>
-          <ClassesList 
-            classes={ classes }
-            handleInputChange={ this.handleInputChange } />
-          <button className='student-form-button' type='submit'>Gerar grade</button>
-        </form>
+        { semesters &&
+          <div>
+            <h3>Ofertas</h3>
+            <Select
+              className='student-form-select'
+              name='semester'
+              value={semester}
+              onChange={this.handleSelectSemester}
+              options={semesters}
+            />
+          </div>
+        }
+        { classes &&
+          <div>
+            <h3>Disciplinas Cursadas</h3>
+            <form className='student-form-list' onSubmit={this.handleFormSubmit}>
+              <ClassesList 
+                classes={ classes }
+                handleInputChange={ this.handleInputChange } />
+              { messageErrors.length > 0 &&
+                <ul className='message-error'>
+                  { messageErrors.map((message, index) => (<li key={index}>{message}</li>)) }
+                </ul>
+              }
+              <button className='student-form-button' type='submit'>Gerar grade</button>
+            </form>
+          </div>
+        }
       </div>
     )
   }

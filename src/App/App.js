@@ -16,8 +16,8 @@ class App extends Component {
   render() {
     return (
       <div className='app'>
-        <AppSubheader />
         <AppHeader location={this.props.location} />
+        <AppSubheader />
         <AppBody isFetching={this.isFetching} />
         { this.state.isFetching && <Loading /> }
       </div>
