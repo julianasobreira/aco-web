@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import HotTable from 'react-handsontable'
 import XLSX from 'xlsx'
 
@@ -56,9 +55,6 @@ class AddCourseOfferings extends Component {
       <div>
         <div className='admin-page-header'>
           <div className='header-title'>
-            <Link to='/admin/ofertas'>
-              <i className='fa fa-arrow-left'></i>
-            </Link>
             <h2>Adicionar Oferta</h2>
           </div>
           <input

@@ -12,9 +12,12 @@
 }
 
 .app-header {
-  background-color: #007eff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #1659bf;
   color: #bfdfff;
-  padding: 30px 0;
+  padding: 20px 0 80px 0;
 }
 
 .app-header h1,
@@ -23,7 +26,7 @@
   color: #fff;
 }
 
-.app-header p {
+.app-header-title {
   font-size: 1.2em;
   margin: 0;
 }
@@ -32,24 +35,17 @@
   .app-header {
     font-size: 1.4em;
   }
-}
-
-.app-header {
-  display: flex;
-  justify-content: center;
-  background-color: #1659bf;
-  color: #bfdfff;
-  padding: 30px 0;
 }
 
 .app-header-container {
   max-width: 700px;
-  padding: 0 30px;
+  padding: 40px 0 25px 0;
+  margin: 0 auto;
   text-align: center;
 }
 
-.app-header p {
-  font-size: 1.2em;
+.app-header-title {
+  font-size: 16px;
   margin: 0;
 }
 
@@ -59,38 +55,22 @@
   }
 }
 
-@media (min-width: 480px) {
-  .app-subheader {
-    font-size: 1.125em;
-    line-height: 28px;
-  }
-}
-
-.app-subheader {
+.app-nav {
   display: flex;
-  justify-content: center;
-  height: 80px;
-  background-color: #0f4097;
-  padding: 30px 0;
-  line-height: 20px;
-}
-
-.app-subheader-container {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 700px;
+  flex-direction: row-reverse;
+  margin-bottom: 20px;
+  margin-right: 30px;
+  font-size: 1.125em;
+  line-height: 28px;
 }
 
-.app-subheader__link {
-  outline: none;
-  text-decoration: none;
-  color: #fff;
-  text-decoration: none;
-}
-
-.app-subheader__link:hover {
-  border-bottom: 1px solid #fff;
+.app-nav-container {
+  display: flex;
+  flex-direction: row-reverse;
+  color: #bfdfff;
+  padding: 0;
+  font-size: 13px;
 }
 
 .app-body {
@@ -104,17 +84,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: center;
   max-width: 700px;
 }
 
 .login-button {
   display: flex;
   color: #fff;
-  font-size: .9rem;
   text-decoration: none;
+  background-color: #0c93f1;
+  padding: 0 13px;
+  border-radius: 5px;
 }
 
-.login-button i {
-  font-size: 1rem;
-  margin-left: 7px;
+.app-header-container i {
+  font-size: 45px;
 }

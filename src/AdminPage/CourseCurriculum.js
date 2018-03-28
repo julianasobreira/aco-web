@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import HotTable from 'react-handsontable'
 import XLSX from 'xlsx'
-import { Link } from 'react-router-dom'
 
 class CourseCurriculum extends Component {
   state = {
@@ -56,9 +55,6 @@ class CourseCurriculum extends Component {
       <div>
         <div className='admin-page-header'>
           <div className='header-title'>
-            <Link to='/admin'>
-              <i className='fa fa-arrow-left'></i>
-            </Link>
             <h2>Grade Curricular</h2>
           </div>
           <input

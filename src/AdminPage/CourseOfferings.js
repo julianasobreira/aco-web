@@ -10,9 +10,6 @@ class CourseOfferings extends Component {
       <div className='course-offerings'>
         <div className='course-offerings-header'>
           <div className='header-title'>
-            <Link to='/admin'>
-              <i className='fa fa-arrow-left'></i>
-            </Link>
             <h2>Ofertas</h2>
           </div>
         </div>
@@ -24,7 +21,7 @@ class CourseOfferings extends Component {
           }
         </ul>
         <div className='admin-page-button'>
-          <Link to='/admin/add-ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
+          <Link to='/add-ofertas' style={{ textDecoration: 'none' }}>Adicionar Oferta</Link>
         </div>
       </div>
     )

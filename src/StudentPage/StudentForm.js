@@ -57,20 +57,22 @@ class StudentForm extends Component {
     const { isFetching, handleSolution } = this.props
     const {course, done, semester} = this.state
 
-    this.setState(prevState => {
-      const messageErrors = []
-      if (!semester) {
-        messageErrors.push('Escolha uma oferta')
-      }
+    const messageErrors = []
+    if (!semester) {
+      messageErrors.push('Escolha uma oferta')
+    }
 
-      if (done.length === 0) {
-        messageErrors.push('Selecione as disciplinas que você cursou')
-      }
+    if (done.length === 0) {
+      messageErrors.push('Selecione as disciplinas que você cursou')
+    }
 
-      return { messageErrors }
-    })
+    if (messageErrors.length > 0) {
+      this.setState({messageErrors})
+      return
+    } else {
+      this.setState({messageErrors: []})
+    }
 
-    return
     isFetching(true)
     axios.post(`${process.env.API_URL}/solucao?curso=${course}&semestre=${semester}`, done)
     .then(response => {
@@ -116,7 +118,6 @@ class StudentForm extends Component {
       semesters,
       messageErrors } = this.state
 
-    console.log(semesters)
     return (
       <div className='student-form'>
         <h3>Curso</h3>

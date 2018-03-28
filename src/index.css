@@ -18,7 +18,8 @@ body {
 }
 
 h1 {
-  font-size: 2.4em;
+  font-size: 36px;
+  margin: 5px 0;
 }
 
 h3 {
@@ -31,14 +32,13 @@ h3 {
   text-align: left;
 }
 
+h2 {
+  color: #495056;
+}
+
 .header-title {
   display: flex;
   align-items: center;
-}
-
-.header-title h2 {
-  color: #495056;
-  margin-left: 10px;
 }
 
 .header-title i {
