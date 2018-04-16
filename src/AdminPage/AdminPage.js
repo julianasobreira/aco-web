@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import './AdminPage.css'
-import CourseOfferings from './CourseOfferings'
-import AddCourseOfferings from './AddCourseOfferings'
-import CourseCurriculum from './CourseCurriculum'
+import CourseOfferings from '../CourseOfferings/CourseOfferings'
+import CourseCurriculum from '../CourseCurriculum/CourseCurriculum'
 
 const Admin = ({match}) => {
   return (
@@ -11,7 +10,6 @@ const Admin = ({match}) => {
       <Switch>
         <Route path={match.url + '/grade'} component={CourseCurriculum}/>
         <Route path={match.url + '/ofertas'} component={CourseOfferings}/>
-        <Route path={match.url + '/add-ofertas'} component={AddCourseOfferings}/>
       </Switch>
     </div>
   )

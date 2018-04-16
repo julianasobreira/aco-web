@@ -1,0 +1,10 @@
+.course-curriculum-item,
+.course-curriculum-item--edit {
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 3px 20px rgba(84,61,110,0.4);
+}
+
+.course-curriculum-item--edit {
+  background-color: #f1eeee; 
+}

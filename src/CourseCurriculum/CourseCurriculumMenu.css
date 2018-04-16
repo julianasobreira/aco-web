@@ -1,0 +1,15 @@
+.course-curriculum-menu {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.course-curriculum-menu-item {
+  margin-right: 10px;
+  display: flex;
+  color: #fff;
+  text-decoration: none;
+  background-color: #999;
+  padding: 5px 13px;
+  border-radius: 5px;
+  cursor: pointer;
+}

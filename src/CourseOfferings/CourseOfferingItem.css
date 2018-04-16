@@ -1,0 +1,32 @@
+.course-offering-item {
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 3px 20px rgba(84,61,110,0.4);
+}
+
+.course-offering-item-date {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.course-offering-item-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-offering-item-title {
+  font-size: 18px;
+}
+
+.course-offering-item-toggle {
+  display: flex;
+  justify-content: center;
+  color: #aaa;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.course-offering-item-content {
+  margin: 15px 0;
+}

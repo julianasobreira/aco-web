@@ -36,12 +36,15 @@ h2 {
   color: #495056;
 }
 
-.header-title {
-  display: flex;
-  align-items: center;
-}
-
-.header-title i {
-  color: #495056;
-  font-size: 1.3rem;
+.button {
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  background-color: #0c93f1;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
 }
