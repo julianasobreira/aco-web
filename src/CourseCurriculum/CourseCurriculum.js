@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react'
-import './CourseCurriculum.css'
 import XLSX from 'xlsx'
-import FormInput from '../FormInput/FormInput'
+import axios from 'axios'
+
+import './CourseCurriculum.css'
+
+import FormField from '../FormField/FormField'
 import FormList from '../FormList/FormList'
 import FormDropdown from '../FormDropdown/FormDropdown'
-import CourseCurriculumMenu from './CourseCurriculumMenu'
-import axios from 'axios'
+import EditMenu from '../EditMenu/EditMenu'
 
 class CourseCurriculum extends Component {
   state = {
@@ -38,14 +40,12 @@ class CourseCurriculum extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const filtered = this.state.xlsx
-      .filter((row, index) => !this.table.hotInstance.isEmptyRow(index))
-    console.log(this.table.hotInstance.getData())
-    this.table.hotInstance.validateCells(isValid => {
-      if (isValid) {
-        console.log()
-      }
-      this.setState({ showError: !isValid })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      uploaded: false,
+      xlsx: []
     })
   }
 
@@ -93,13 +93,6 @@ class CourseCurriculum extends Component {
     fileReader.readAsArrayBuffer(file)
   }
 
-  handleCancel = () => {
-    this.setState({
-      uploaded: false,
-      xlsx: []
-    })
-  }
-
   render() {
     const { uploaded, curriculum, periods, xlsx } =  this.state
     const list = uploaded ? xlsx : curriculum
@@ -123,7 +116,7 @@ class CourseCurriculum extends Component {
             className='admin-page-link'>Upload Nova Grade Curricular</label>
         </div>
         { uploaded &&
-          <CourseCurriculumMenu
+          <EditMenu
             onSave={this.handleSubmit}
             onCancel={this.handleCancel} />
         }
@@ -134,53 +127,39 @@ class CourseCurriculum extends Component {
               {
                 list.map((item, index) => (
                   <div key={index} className={`course-curriculum-item${itemClass}`}>
-                    <FormInput
+                    <FormField
                       label='Nome'
-                      type='text'
                       value={item.nome}
-                      disabled={true}
                     />
-                    <FormInput
+                    <FormField
                       label='Código da disciplina'
-                      type='text'
                       value={item.codDisciplina}
-                      disabled={true}
                     />
-                    <FormInput
+                    <FormField
                       label='Carga Horária'
                       type='number'
                       value={item.cargaHoraria}
-                      disabled={true}
                     />
                     <FormDropdown
                       label='Período'
                       value={item.periodo}
                       options={periods}
-                      disabled={true}
                     />
                     <FormList
                       label='Co-Requisitos'
-                      type='text'
                       list={item.coRequisitos}
-                      disabled={true}
                     />
                     <FormList
                       label='Pró-Requisitos'
-                      type='text'
                       list={item.proRequisitos}
-                      disabled={true}
                     />
                     <FormList
                       label='Pré-Requisitos'
-                      type='text'
                       list={item.preRequisitos}
-                      disabled={true}
                     />
                     <FormList
                       label='Equivalências'
-                      type='text'
                       list={item.equivalencias}
-                      disabled={true}
                     />
                   </div>
                 ))

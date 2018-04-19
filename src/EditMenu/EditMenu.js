@@ -1,8 +1,8 @@
 import React from 'react'
-import './CourseCurriculumMenu.css'
+import './EditMenu.css'
 import Select from 'react-select'
 
-const CourseCurriculumMenu = ({onSave, onCancel}) => {
+const EditMenu = ({onSave, onCancel}) => {
   return (
     <div className='course-curriculum-menu'>
       <div className='course-curriculum-menu-item'>Salvar Alterações</div>
@@ -13,4 +13,4 @@ const CourseCurriculumMenu = ({onSave, onCancel}) => {
   )
 }
 
-export default CourseCurriculumMenu
+export default EditMenu
