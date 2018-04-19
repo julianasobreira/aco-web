@@ -3,12 +3,12 @@
 }
 
 .form-field,
-.form-field-error {
+.form-field--error {
   padding: 3px 2px;
   margin: 0;
 }
 
-.form-field-error {
+.form-field--error {
   background-color: #fcc;
 }
 

@@ -52,32 +52,39 @@ class CourseOfferingItem extends Component {
   }
 
   render() {
-    const { courseOffering } = this.props
+    const { courseOffering, editMode } = this.props
     const { isOpen } = this.state
 
     return (
-      <div className='course-offering-item'>
+      <div className={editMode ? 'course-offering-item--edit' : 'course-offering-item'}>
         <div className='course-offering-item-date'>{courseOffering.created_at}</div>
         <div className='course-offering-item-title'>
           <div className='course-offering-item-title'>Oferta {courseOffering.semester}</div>
           <button className='button'>Deletar</button>
         </div>
-        { isOpen && courseOffering.ofertas.map((item, index) => this.description(item, index)) }
-        <div
-          onClick={this.toggleDescription}
-          className='course-offering-item-toggle'>
-          { isOpen
-            ? <i className='fa fa-angle-up'></i>
-            : <i className='fa fa-angle-down'></i>
-          }
-        </div>
+        { (isOpen || editMode) && courseOffering.ofertas.map((item, index) => this.description(item, index)) }
+        { !editMode &&
+          <div
+            onClick={this.toggleDescription}
+            className='course-offering-item-toggle'>
+            { isOpen
+              ? <i className='fa fa-angle-up'></i>
+              : <i className='fa fa-angle-down'></i>
+            }
+          </div>
+        }
       </div>
     )
   }
 }
 
+CourseOfferingItem.defaultProps = {
+  editMode: false
+};
+
 CourseOfferingItem.propTypes = {
-  courseOffering: PropTypes.object
+  courseOffering: PropTypes.object,
+  editMode: PropTypes.bool
 }
 
 export default CourseOfferingItem

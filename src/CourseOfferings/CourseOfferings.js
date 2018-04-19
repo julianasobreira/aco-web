@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import XLSX from 'xlsx'
 
 import CourseOfferingItem from './CourseOfferingItem'
-import EditCourseOffering from './EditCourseOffering'
+import EditMenu from '../EditMenu/EditMenu'
 
 class CourseOfferings extends Component {
   state = {
@@ -49,9 +49,8 @@ class CourseOfferings extends Component {
   }
 
   handleCancel = () => {
-    this.setState({
-      uploadedCourseOfferings: null
-    })
+    this.setState({ uploadedCourseOfferings: null })
+    this.inputFile.value = ''
   }
 
   convertArrayToObject = array => {
@@ -99,8 +98,9 @@ class CourseOfferings extends Component {
           </div>
           <input
             type='file'
-            id='upload-planilha'
+            ref={node => {this.inputFile = node}}
             name='upload-planilha'
+            id='upload-planilha'
             className='upload-input'
             accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel'
             onChange={this.handleFileUpload} />
@@ -108,17 +108,20 @@ class CourseOfferings extends Component {
             htmlFor='upload-planilha'
             className='admin-page-link'>Upload nova oferta</label>
         </div>
-        { uploadedCourseOfferings &&
-          <EditCourseOffering
-            onSave={this.handleSubmit}
-            onCancel={this.handleCancel}
-            courseOffering={{ ofertas: uploadedCourseOfferings}} />
-        }
-        { courseOfferings.length === 0
-          ? <div>Não ofertas adicionadas.</div>
-          : courseOfferings.map((item, index) =>
-              <CourseOfferingItem key={index} courseOffering={item}/>
-            )
+        { uploadedCourseOfferings
+          ? <Fragment>
+              <EditMenu
+                onSave={this.handleSubmit}
+                onCancel={this.handleCancel} />
+              <CourseOfferingItem
+                editMode={true}
+                courseOffering={{ofertas: uploadedCourseOfferings}}/>
+            </Fragment>
+          : courseOfferings.length === 0
+            ? <div>Não ofertas adicionadas.</div>
+            : courseOfferings.map((item, index) =>
+                <CourseOfferingItem key={index} courseOffering={item}/>
+              )
         }
       </div>
     )
