@@ -2,17 +2,28 @@ import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import XLSX from 'xlsx'
 import axios from 'axios'
+import Select from 'react-select'
+
+import './CourseOfferings.css'
 
 import CourseOfferingItem from './CourseOfferingItem'
 import EditMenu from '../EditMenu/EditMenu'
 
 class CourseOfferings extends Component {
+  currentYear = new Date().getFullYear()
+  yearList = []
   state = {
     uploadedCourseOfferings: null,
-    courseOfferings: []
+    courseOfferings: [],
+    year: this.currentYear,
+    semester: 1,
   }
 
   componentDidMount () {
+    for (let i = this.currentYear - 3; i <= this.currentYear + 5; i++) {
+        this.yearList.push({ value: i, label: i })
+    }
+
     axios.get(`${process.env.API_URL}/oferta?curso=Engenharia da Computação`)
     .then(({data}) => {
         const horarios = {}
@@ -40,8 +51,26 @@ class CourseOfferings extends Component {
     })
   }
 
-  handleSubmit = e => {
+  saveCourseOffering = e => {
     e.preventDefault()
+    const { year, semester, uploadedCourseOfferings } = this.state
+    axios.post(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${year}.${semester}`, uploadedCourseOfferings)
+    .then(() => {
+        console.log('Criado!')
+    })
+    .catch(error => {
+        console.log('Erro: ', error)
+    })
+  }
+
+  deleteCourseOffering = semestre => {
+    axios.delete(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${semestre}`)
+    .then(() => {
+        console.log('Deletado!')
+    })
+    .catch(error => {
+        console.log('Erro: ', error)
+    })
   }
 
   handleCancel = () => {
@@ -83,8 +112,21 @@ class CourseOfferings extends Component {
     fileReader.readAsArrayBuffer(file)
   }
 
+  handleSelectYear = item => {
+    this.setState({ year: item.value})
+  }
+
+  handleSelectSemester = e => {
+    console.log(e.target.value)
+    this.setState({ semester: Number(e.target.value)})
+  }
+
   render() {
-    const { uploadedCourseOfferings, courseOfferings } =  this.state
+    const { 
+        uploadedCourseOfferings, 
+        courseOfferings,
+        semester,
+        year } =  this.state
 
     return (
       <div className='course-offerings'>
@@ -106,17 +148,47 @@ class CourseOfferings extends Component {
         </div>
         { uploadedCourseOfferings
           ? <Fragment>
-              <EditMenu
-                onSave={this.handleSubmit}
-                onCancel={this.handleCancel} />
-              <CourseOfferingItem
-                editMode={true}
-                courseOffering={{ofertas: uploadedCourseOfferings}}/>
+                <form>
+                    <Select
+                        name='semestre'
+                        placeholder='Selecione o ano da oferta'
+                        className='course-offerings-semester'
+                        value={year}
+                        onChange={this.handleSelectYear}
+                        options={this.yearList} />
+                    <label className='course-offerings-label'>
+                        <input
+                            type='radio'
+                            value='1'
+                            className='course-offerings-checkbox-control'
+                            onChange={this.handleSelectSemester}
+                            checked={semester === 1} />
+                        Semestre 1
+                    </label>
+                    <label className='course-offerings-label'>
+                        <input
+                            type='radio'
+                            value='2'
+                            className='course-offerings-checkbox-control'
+                            onChange={this.handleSelectSemester}
+                            checked={semester === 2} />
+                        Semestre 2
+                    <EditMenu
+                        onSave={this.saveCourseOffering}
+                        onCancel={this.handleCancel} />
+                    </label>
+                </form>
+                <CourseOfferingItem
+                    editMode={true}
+                    courseOffering={{ofertas: uploadedCourseOfferings}}/>
             </Fragment>
           : courseOfferings.length === 0
             ? <div>Não há ofertas adicionadas.</div>
             : courseOfferings.map((item, index) =>
-                <CourseOfferingItem key={index} courseOffering={item}/>
+                <CourseOfferingItem 
+                    key={index}
+                    courseOffering={item}
+                    deleteCourseOffering={this.deleteCourseOffering} />
               )
         }
       </div>

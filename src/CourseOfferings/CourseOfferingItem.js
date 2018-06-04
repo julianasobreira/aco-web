@@ -51,6 +51,11 @@ class CourseOfferingItem extends Component {
     )
   }
 
+  deleteCourseOffering = () => {
+    const { deleteCourseOffering, courseOffering } = this.props
+    deleteCourseOffering(courseOffering.semester)
+  }
+
   render() {
     const { courseOffering, editMode } = this.props
     const { isOpen } = this.state
@@ -62,13 +67,13 @@ class CourseOfferingItem extends Component {
 
     return (
       <div className={editMode ? 'course-offering-item--edit' : 'course-offering-item'}>
-        <div className='course-offering-item-date'>{created_at}</div>
+        {editMode || <div className='course-offering-item-date'>{created_at}</div>}
         <div className='course-offering-item-title'>
           <div className='course-offering-item-title'>Oferta {courseOffering.semester}</div>
-          <button className='button'>Deletar</button>
+          { editMode || <button className='button' onClick={this.deleteCourseOffering}>Deletar</button>}
         </div>
         { (isOpen || editMode) && courseOffering.ofertas.map((item, index) => this.description(item, index)) }
-        { !editMode &&
+        { editMode ||
           <div
             onClick={this.toggleDescription}
             className='course-offering-item-toggle'>
@@ -88,6 +93,7 @@ CourseOfferingItem.defaultProps = {
 };
 
 CourseOfferingItem.propTypes = {
+  deleteCourseOffering: PropTypes.func,
   courseOffering: PropTypes.object,
   editMode: PropTypes.bool
 }

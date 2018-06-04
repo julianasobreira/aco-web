@@ -1,0 +1,18 @@
+.course-offerings-semester {
+  margin: 10px 0;
+}
+
+.course-offerings-checkbox {
+  display: flex;
+}
+
+.course-offerings-label {
+  display: inline;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.course-offerings-checkbox-control {
+  display: inline;
+  margin-right: 10px;
+}
