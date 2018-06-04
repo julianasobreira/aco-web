@@ -54,10 +54,15 @@ class CourseOfferingItem extends Component {
   render() {
     const { courseOffering, editMode } = this.props
     const { isOpen } = this.state
+    const created_at = new Date(courseOffering.created_at).toLocaleString('pt-BR', {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric'
+    })
 
     return (
       <div className={editMode ? 'course-offering-item--edit' : 'course-offering-item'}>
-        <div className='course-offering-item-date'>{courseOffering.created_at}</div>
+        <div className='course-offering-item-date'>{created_at}</div>
         <div className='course-offering-item-title'>
           <div className='course-offering-item-title'>Oferta {courseOffering.semester}</div>
           <button className='button'>Deletar</button>
