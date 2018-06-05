@@ -1,15 +1,17 @@
 .course-curriculum-menu {
   display: flex;
-  margin-bottom: 20px;
+  margin: 10px 0 20px 0;
 }
 
 .course-curriculum-menu-item {
   margin-right: 10px;
   display: flex;
-  color: #fff;
   text-decoration: none;
-  background-color: #999;
-  padding: 5px 13px;
+  font-size: 12px;
   border-radius: 5px;
   cursor: pointer;
+  border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+  border-style: solid;
+  border-width: 1px;
+  padding: 1px 7px 2px;
 }

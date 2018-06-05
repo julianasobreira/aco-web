@@ -7,12 +7,12 @@
 }
 
 .course-offerings-label {
-  display: inline;
+  display: flex;
   align-items: baseline;
   justify-content: flex-start;
+  margin-bottom: 5px;
 }
 
 .course-offerings-checkbox-control {
-  display: inline;
   margin-right: 10px;
 }
