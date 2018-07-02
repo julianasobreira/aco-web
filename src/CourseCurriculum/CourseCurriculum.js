@@ -4,10 +4,15 @@ import axios from 'axios'
 
 import './CourseCurriculum.css'
 
+import fieldsValidation from '../utils/fieldsValidation'
+
+import Button from '../Button/Button'
 import FormField from '../FormField/FormField'
 import FormList from '../FormList/FormList'
-import FormDropdown from '../FormDropdown/FormDropdown'
 import EditMenu from '../EditMenu/EditMenu'
+import CourseCurriculumItem from './CourseCurriculumItem'
+import Alert from '../Alert/Alert'
+import Loading from '../Loading/Loading'
 
 class CourseCurriculum extends Component {
   state = {
@@ -15,38 +20,79 @@ class CourseCurriculum extends Component {
     isValid: false,
     showError: false,
     curriculum: [],
-    uploaded: false,
-    periods: [
-      {value: 0, label: 0},
-      {value: 1, label: 1},
-      {value: 2, label: 2},
-      {value: 3, label: 3},
-      {value: 4, label: 4},
-      {value: 5, label: 5},
-      {value: 6, label: 6},
-      {value: 7, label: 7},
-      {value: 8, label: 8},
-      {value: 9, label: 9},
-      {value: 10, label: 10}
-    ]
+    isFetching: false,
+    isError: false,
+    editMode: false,
+    showAlert: false
   }
 
   componentDidMount () {
+    this.fetchCurriculum()
+  }
+
+  fetchCurriculum = () => {
+    this.setState({isFetching: true})
     axios.get(`${process.env.API_URL}/grade?curso=Engenharia da Computação`)
     .then(response => {
-      this.setState({curriculum: response.data})
+      this.setState({
+        curriculum: response.data,
+        isFetching: false,
+        isError: false
+      })
+    })
+    .catch(() => {
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
+    })
+  }
+
+  closeAlert = () => {
+    this.setState({ showAlert: false })
+  }
+
+  showAlert = () => {
+    const { curriculum, isFetching, isError } = this.state
+    if (curriculum.length > 0 && !isError && !isFetching) {
+      this.setState({ showAlert: true })
+    }
+  }
+
+  handleDelete = e => {
+    e.preventDefault()
+    axios.delete(`${process.env.API_URL}/grade?curso=Engenharia da Computação`)
+    .then(() => {
+      this.closeAlert()
+      this.fetchCurriculum()
+    })
+    .catch(() => {
+      this.closeAlert()
     })
   }
 
   handleSubmit = e => {
     e.preventDefault()
+    const { xlsx } = this.props
+
+    axios.post(`${process.env.API_URL}/grade?curso=Engenharia da Computação`, xlsx)
+    .then(() => {
+      this.closeEditMode()
+      this.fetchCurriculum()
+    })
+    .catch(error => {
+      console.log('Erro: ', error)
+      this.closeEditMode()
+    })
   }
 
-  handleCancel = () => {
+  closeEditMode = () => {
     this.setState({
-      uploaded: false,
+      editMode: false,
       xlsx: []
     })
+
+    this.inputFile.value = ''
   }
 
   convertStringToList = item => {
@@ -86,7 +132,7 @@ class CourseCurriculum extends Component {
       const sheet = workbook.Sheets[workbook.SheetNames[0]]
       const xlsx = XLSX.utils.sheet_to_json(sheet, {header: 1, blankrows: false})
       this.setState({
-        uploaded: true,
+        editMode: true,
         xlsx: this.convertArrayToObject(xlsx)
       })
     }
@@ -94,9 +140,15 @@ class CourseCurriculum extends Component {
   }
 
   render() {
-    const { uploaded, curriculum, periods, xlsx } =  this.state
-    const list = uploaded ? xlsx : curriculum
-    const itemClass = uploaded ? '--edit' : ''
+    const { 
+      editMode,
+      curriculum,
+      periods,
+      xlsx,
+      showAlert,
+      isFetching } =  this.state
+    const courseCurriculum = editMode ? xlsx : curriculum
+    const itemClass = editMode ? '--edit' : ''
 
     return (
       <div>
@@ -104,67 +156,38 @@ class CourseCurriculum extends Component {
           <div className='header-title'>
             <h2>Grade Curricular</h2>
           </div>
-          <input
-            type='file'
-            id='upload-planilha'
-            name='upload-planilha'
-            className='upload-input'
-            accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel'
-            onChange={this.handleFileUpload} />
-          <label
-            htmlFor='upload-planilha'
-            className='admin-page-link'>Upload Nova Grade Curricular</label>
+          <div>
+            <input
+              type='file'
+              ref={node => {this.inputFile = node}}
+              id='upload-planilha'
+              name='upload-planilha'
+              className='upload-input'
+              accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel'
+              onChange={this.handleFileUpload} />
+            <label
+              htmlFor='upload-planilha'
+              className='admin-page-link'>Upload Nova Grade Curricular</label>
+            <Button text='Deletar Grade' action={this.showAlert} />
+          </div>
         </div>
-        { uploaded &&
+        { editMode &&
           <EditMenu
             onSave={this.handleSubmit}
-            onCancel={this.handleCancel} />
+            onCancel={this.closeEditMode} />
+        }
+        <CourseCurriculumItem
+          editMode={editMode}
+          courseCurriculum={courseCurriculum}/>
+        {
+          showAlert &&
+          <Alert
+            cancel={this.closeAlert}
+            confirm={this.handleDelete}
+            text='Ao deletar a grade horária irá deletar todas as ofertas relacionadas. Deseja continuar?'/>
         }
         {
-          list.length === 0
-          ? <div>Não há grade horária adicionada.</div>
-          : <Fragment>
-              {
-                list.map((item, index) => (
-                  <div key={index} className={`course-curriculum-item${itemClass}`}>
-                    <FormField
-                      label='Nome'
-                      value={item.nome}
-                    />
-                    <FormField
-                      label='Código da disciplina'
-                      value={item.codDisciplina}
-                    />
-                    <FormField
-                      label='Carga Horária'
-                      type='number'
-                      value={item.cargaHoraria}
-                    />
-                    <FormDropdown
-                      label='Período'
-                      value={item.periodo}
-                      options={periods}
-                    />
-                    <FormList
-                      label='Co-Requisitos'
-                      list={item.coRequisitos}
-                    />
-                    <FormList
-                      label='Pró-Requisitos'
-                      list={item.proRequisitos}
-                    />
-                    <FormList
-                      label='Pré-Requisitos'
-                      list={item.preRequisitos}
-                    />
-                    <FormList
-                      label='Equivalências'
-                      list={item.equivalencias}
-                    />
-                  </div>
-                ))
-              }
-            </Fragment>
+          isFetching && <Loading />
         }
       </div>
     )

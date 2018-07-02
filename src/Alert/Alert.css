@@ -1,0 +1,37 @@
+.alert-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+  opacity: .3;
+}
+
+.alert-container {
+  position: fixed;
+  top: 200px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 350px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 15px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.alert-container-text {
+  text-align: center;
+}
+
+.alert-container-options {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+}
+
+.alert-container-options button+button {
+  margin-left: 10px;
+}

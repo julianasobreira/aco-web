@@ -1,4 +1,7 @@
-const isValidNumber = item => Number(item) && item >= 0
+const isValidNumber = item => {
+  const number = Number(item)
+  return Number.isInteger(number) && number >= 0
+}
 const isValidWeekday = item => item === 'seg' || item === 'ter' || item === 'qua' || item === 'qui' || item === 'sex'
 const isValidClassCode = item => {
   const regex = /[A-Z]{4}[0-9]{4}/
