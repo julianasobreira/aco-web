@@ -55,6 +55,8 @@
 }
 
 .classes-schedule-link {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 

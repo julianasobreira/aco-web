@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 import './ClassSchedule.css'
 
@@ -23,6 +25,18 @@ class ClassSchedule extends Component {
     }
     return initialClassesGrid
   }
+
+  downloadSolutionGrid = () => {
+    html2canvas(this.solutionGrid)
+      .then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(imgData, 'PNG', 10, 30, 180, 110);
+        pdf.output('dataurlnewwindow');
+        pdf.save('horário otimizado.pdf');
+      })
+  }
+
   render() {
     const { classesGrid, showClassesGrid } = this.props
     const classesGridFormated = this.formatGrid(classesGrid)
@@ -31,8 +45,9 @@ class ClassSchedule extends Component {
       <div className='classes-schedule'>
         <span className='classes-schedule-link'>
           <a onClick={showClassesGrid}>Voltar ao formulário</a>
+          <a onClick={this.downloadSolutionGrid}>Baixar horário</a>
         </span>
-        <div className='classes-schedule-container'>
+        <div className='classes-schedule-container' ref={solutionGrid => this.solutionGrid = solutionGrid}>
           <ClassScheduleHeader />
           <ClassScheduleRow 
             classes={ classesGridFormated['8'] }
