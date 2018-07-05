@@ -73,7 +73,7 @@ class CourseCurriculum extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { xlsx } = this.props
+    const { xlsx } = this.state
 
     axios.post(`${process.env.API_URL}/grade?curso=Engenharia da Computação`, xlsx)
     .then(() => {

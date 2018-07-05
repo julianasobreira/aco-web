@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { isLoggedIn } from '../utils/auth'
 import StudentPage from '../StudentPage/StudentPage'
 import AdminPage from '../AdminPage/AdminPage'
+import Diagram from '../Diagram/Diagram'
 
 const AppBody = ({ isFetching }) => {
   return (
@@ -13,6 +14,7 @@ const AppBody = ({ isFetching }) => {
           <Route exact path='/' render={ props => (
             <StudentPage {...props} isFetching={isFetching} />
           )}/>
+          <Route exact path='/grade-curricular' component={Diagram} />
           <Route path='/admin' render={ props => {
             return ( 
               isLoggedIn()
