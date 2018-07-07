@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import XLSX from 'xlsx'
 import axios from 'axios'
+import { getAuthInfo } from '../utils/auth'
 
 import './CourseCurriculum.css'
 
@@ -26,14 +27,16 @@ class CourseCurriculum extends Component {
     editMode: false,
     showAlert: false
   }
+  userInfo = null
 
   componentDidMount () {
+    this.userInfo = getAuthInfo()
     this.fetchCurriculum()
   }
 
   fetchCurriculum = () => {
     this.setState({isFetching: true})
-    axios.get(`${process.env.API_URL}/grade?curso=Engenharia da Computação`)
+    axios.get(`${process.env.API_URL}/grade?curso=${this.userInfo.codCurso}`)
     .then(response => {
       this.setState({
         curriculum: response.data,
@@ -62,7 +65,7 @@ class CourseCurriculum extends Component {
 
   handleDelete = e => {
     e.preventDefault()
-    axios.delete(`${process.env.API_URL}/grade?curso=Engenharia da Computação`)
+    axios.delete(`${process.env.API_URL}/grade?curso=${this.userInfo.codCurso}`)
     .then(() => {
       this.closeAlert()
       this.fetchCurriculum()
@@ -77,7 +80,7 @@ class CourseCurriculum extends Component {
     const { xlsx } = this.state
 
     this.setState({ isFetching: true })
-    axios.post(`${process.env.API_URL}/grade?curso=Engenharia da Computação`, xlsx)
+    axios.post(`${process.env.API_URL}/grade?curso=${this.userInfo.codCurso}`, xlsx)
     .then(() => {
       this.closeEditMode()
       this.fetchCurriculum()

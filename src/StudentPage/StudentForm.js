@@ -8,25 +8,48 @@ import 'react-select/dist/react-select.css'
 
 import ClassesList from './ClassesList'
 import MessageError from '../MessageError/MessageError'
+import Loading from '../Loading/Loading'
 
 class StudentForm extends Component {
   state = {
-    course: '',
-    courses: [
-      { value: 'Engenharia da Computação', label: 'Engenharia da Computação' }
-    ],
+    course: null,
+    courses: [],
     classes: null,
     semester: '',
     semesters: null,
     done: [],
-    messageErrors: [] 
+    messageErrors: [],
+    isFetching: false,
+    isError: false
+  }
+
+  componentDidMount () {
+    this.setState({ isFetching: true })
+    axios.get(`${process.env.API_URL}/cursos`)
+    .then(response => {
+      const courses = response.data.map(course => ({
+        value: course.id,
+        label: course.nome
+      }))
+      this.setState({
+        isFetching: false,
+        isError: false,
+        courses
+      })
+    })
+    .catch(error => {
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
+    })
   }
 
   fetchClasses = () => {
     const { isFetching } = this.props
-    isFetching(true)
+    this.setState({ isFetching: true })
 
-    axios.get(`${process.env.API_URL}/curso?nome=${this.state.course}`)
+    axios.get(`${process.env.API_URL}/curso?curso=${this.state.course.value}`)
     .then(response => {
       const { disciplinas, semestres } = response.data
       const courseModules = {}
@@ -42,14 +65,17 @@ class StudentForm extends Component {
         }
       })
       this.setState({
+        isFetching: false,
+        isError: false,
         classes: courseModules,
         semesters: semestres.map(semester => ({ value: semester, label: semester }))
       })
-      isFetching(false)
     })
     .catch(error => {
-      isFetching(false)
-      this.setState({ fetchError: false })
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
     })
   }
 
@@ -74,21 +100,28 @@ class StudentForm extends Component {
       this.setState({messageErrors: []})
     }
 
-    isFetching(true)
-    axios.post(`${process.env.API_URL}/solucao?curso=${course}&semestre=${semester}`, done)
+    this.setState({ isFetching: true })
+    axios.post(`${process.env.API_URL}/solucao?curso=${course.value}&semestre=${semester}`, done)
     .then(response => {
       const classesGrid = response.data
       handleSolution(classesGrid)
-      isFetching(false)
+      this.setState({
+        isFetching: false,
+        isError: false
+      })
     })
     .catch(error => {
-      isFetching(false)
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
     })
   }
 
   handleSelectCourse = item => {
+    console.log(item)
     this.setState({
-      course: item.value
+      course: { ...item }
     }, this.fetchClasses)
   }
 
@@ -117,15 +150,20 @@ class StudentForm extends Component {
       classes,
       semester,
       semesters,
-      messageErrors } = this.state
+      messageErrors,
+      isError,
+      isFetching } = this.state
 
     return (
       <div className='student-form'>
         <h3>Curso</h3>
+        { isError &&
+          <MessageError errors={['Ocorreu um erro durante essa operação.']} />
+        }
         <Select
           className='student-form-select'
           name='course'
-          value={course}
+          value={course && course.value}
           onChange={this.handleSelectCourse}
           options={courses}
         />
@@ -155,6 +193,7 @@ class StudentForm extends Component {
             </form>
           </div>
         }
+        { isFetching && <Loading /> }
       </div>
     )
   }
@@ -162,7 +201,6 @@ class StudentForm extends Component {
 
 StudentForm.propTypes = {
   handleSolution: PropTypes.func,
-  isFetching: PropTypes.func
 }
 
 export default StudentForm

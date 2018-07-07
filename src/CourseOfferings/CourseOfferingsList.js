@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
+import { getAuthInfo } from '../utils/auth'
 
 import './CourseOfferings.css'
 
@@ -13,14 +14,16 @@ class CourseOfferingsList extends Component {
     isFetching: false,
     isError: false
   }
+  userInfo = null
 
   componentDidMount () {
+    this.userInfo = getAuthInfo()
     this.fetchCourseList()
   }
 
   fetchCourseList = () => {
     this.setState({ isFetching: true })
-    axios.get(`${process.env.API_URL}/oferta?curso=Engenharia da Computação`)
+    axios.get(`${process.env.API_URL}/oferta?curso=${this.userInfo.codCurso}`)
     .then(({data}) => {
         const horarios = {}
 
@@ -71,7 +74,7 @@ class CourseOfferingsList extends Component {
 
   deleteCourseOffering = semestre => {
     this.setState({ isFetching: true })
-    axios.delete(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${semestre}`)
+    axios.delete(`${process.env.API_URL}/oferta?curso=${this.userInfo.codCurso}&semestre=${semestre}`)
     .then(() => {
         this.setState(prevState => ({
           isFetching: false,

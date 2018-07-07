@@ -6,6 +6,10 @@ const ClassesList = ({ classes, handleInputChange }) => {
     return null
   }
 
+  if (classes && Object.values(classes).length === 0) {
+    return <div className='student-form-list-message'>Esse curso não possui uma grade curricular adicionada. </div>
+  }
+
   return (
     <Fragment>
      {

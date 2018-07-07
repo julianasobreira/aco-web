@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import PropTypes from 'prop-types'
+import { getAuthInfo } from '../utils/auth'
 
 import './CourseOfferings.css'
 
@@ -19,6 +20,11 @@ class CourseOfferingsEdit extends Component {
     isFetching: false,
     isError: false
   }
+  userInfo = null
+
+  componentDidMount () {
+    this.userInfo = getAuthInfo()
+  }
 
   componentWillMount () {
     for (let i = this.currentYear - 3; i <= this.currentYear + 5; i++) {
@@ -31,7 +37,7 @@ class CourseOfferingsEdit extends Component {
     const { year, semester } = this.state
     const { uploadedCourseOfferings, closeEditMode } = this.props
     this.setState({ isFetching: true })
-    axios.post(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${year}.${semester}`, uploadedCourseOfferings)
+    axios.post(`${process.env.API_URL}/oferta?curso=${this.userInfo.codCurso}&semestre=${year}.${semester}`, uploadedCourseOfferings)
     .then(() => {
       closeEditMode()
       this.setState({
