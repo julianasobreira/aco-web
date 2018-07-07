@@ -7,6 +7,8 @@ import './CourseOfferings.css'
 
 import CourseOfferingItem from './CourseOfferingItem'
 import EditMenu from '../EditMenu/EditMenu'
+import Loading from '../Loading/Loading'
+import MessageError from '../MessageError/MessageError'
 
 class CourseOfferingsEdit extends Component {
   currentYear = new Date().getFullYear()
@@ -14,6 +16,8 @@ class CourseOfferingsEdit extends Component {
   state = {
     year: this.currentYear,
     semester: 1,
+    isFetching: false,
+    isError: false
   }
 
   componentWillMount () {
@@ -26,14 +30,21 @@ class CourseOfferingsEdit extends Component {
     e.preventDefault()
     const { year, semester } = this.state
     const { uploadedCourseOfferings, closeEditMode } = this.props
-    console.log(uploadedCourseOfferings)
+    this.setState({ isFetching: true })
     axios.post(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${year}.${semester}`, uploadedCourseOfferings)
     .then(() => {
-      console.log('Criado!')
       closeEditMode()
+      this.setState({
+        isFetching: false,
+        isError: false
+      })
     })
     .catch(error => {
       console.log('Erro: ', error)
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
     })
   }
 
@@ -50,7 +61,7 @@ class CourseOfferingsEdit extends Component {
   }
 
   render() {
-    const { semester, year } =  this.state
+    const { semester, year, isFetching, isError } =  this.state
     const { uploadedCourseOfferings } = this.props
 
     return (
@@ -84,9 +95,11 @@ class CourseOfferingsEdit extends Component {
         <EditMenu
           onSave={this.saveCourseOffering}
           onCancel={this.handleCancel} />
+        { isError && <MessageError errors={['Ocorreu um erro durante a operação.']} /> }
         <CourseOfferingItem
           editMode={true}
           courseOffering={{ofertas: uploadedCourseOfferings}}/>
+        { isFetching && <Loading /> }
       </div>
     )
   }

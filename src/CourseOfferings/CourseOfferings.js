@@ -9,7 +9,9 @@ import CourseOfferingsEdit from './CourseOfferingsEdit'
 class CourseOfferings extends Component {
   state = {
     uploadedCourseOfferings: null,
-    editMode: false
+    editMode: false,
+    isFetching: false,
+    isError: false
   }
 
   handleFileUpload = e => {

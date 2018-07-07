@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Menu from './Menu'
 import { Link } from 'react-router-dom'
-import { clearToken, isLoggedIn } from '../utils/auth'
+import { clearAuthInfo, isLoggedIn } from '../utils/auth'
 
 class AppHeader extends Component {
   render() {
@@ -9,7 +9,7 @@ class AppHeader extends Component {
       <section className='app-nav'>
         <div className='app-nav-container'>
           { isLoggedIn()
-            ? <a href='' className='login-button' onClick={clearToken}>
+            ? <a href='' className='login-button' onClick={clearAuthInfo}>
                 Logout
               </a>
             : <Link to='/login' className='login-button'>

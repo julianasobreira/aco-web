@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { setToken } from '../utils/auth'
+import md5 from 'md5'
+import { setAuthInfo } from '../utils/auth'
 import { Redirect } from 'react-router-dom'
 import Loading from '../Loading/Loading'
 import './Login.css';
 
 class Login extends Component {
   state = {
-    login: null,
+    email: null,
     senha: null,
     loginSuccess: false,
     loginFail: false,
     isFetching: false
   }
 
-  handleLogin = e => {
+  handleEmail = e => {
     this.setState({
-      login: e.target.value
+      email: e.target.value
     })
   }
 
@@ -28,13 +29,13 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { senha, login } = this.state
+    const { senha, email } = this.state
     this.setState({
       isFetching: true
     })
-    axios.post(`${process.env.API_URL}/login`, {login, senha})
+    axios.post(`${process.env.API_URL}/login`, {email, senha: md5(senha)})
       .then(response => {
-        setToken(response.data)
+        setAuthInfo(response.data)
         this.setState({
           loginSuccess: true,
           loginError: false,
@@ -60,7 +61,7 @@ class Login extends Component {
       <div className='login' onSubmit={this.handleSubmit}>
         <form className='login-container' >
           <h2 className='login-container-title'>Administrador</h2>
-          <input type='text' placeholder='Login' onChange={this.handleLogin}/>
+          <input type='text' placeholder='Login' onChange={this.handleEmail}/>
           <input type='password' placeholder='Senha' onChange={this.handleSenha}/>
           { this.state.loginError &&
             <div className='login-error'>Ocorreu um erro durante a operação</div>

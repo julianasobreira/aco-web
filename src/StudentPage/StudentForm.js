@@ -7,6 +7,7 @@ import './StudentForm.css'
 import 'react-select/dist/react-select.css'
 
 import ClassesList from './ClassesList'
+import MessageError from '../MessageError/MessageError'
 
 class StudentForm extends Component {
   state = {
@@ -148,9 +149,7 @@ class StudentForm extends Component {
                 classes={ classes }
                 handleInputChange={ this.handleInputChange } />
               { messageErrors.length > 0 &&
-                <ul className='message-error'>
-                  { messageErrors.map((message, index) => (<li key={index}>{message}</li>)) }
-                </ul>
+                <MessageError errors={messageErrors} />
               }
               <button className='student-form-button' type='submit'>Gerar grade</button>
             </form>

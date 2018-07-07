@@ -13,6 +13,7 @@ import EditMenu from '../EditMenu/EditMenu'
 import CourseCurriculumItem from './CourseCurriculumItem'
 import Alert from '../Alert/Alert'
 import Loading from '../Loading/Loading'
+import MessageError from '../MessageError/MessageError'
 
 class CourseCurriculum extends Component {
   state = {
@@ -75,6 +76,7 @@ class CourseCurriculum extends Component {
     e.preventDefault()
     const { xlsx } = this.state
 
+    this.setState({ isFetching: true })
     axios.post(`${process.env.API_URL}/grade?curso=Engenharia da Computação`, xlsx)
     .then(() => {
       this.closeEditMode()
@@ -82,14 +84,19 @@ class CourseCurriculum extends Component {
     })
     .catch(error => {
       console.log('Erro: ', error)
-      this.closeEditMode()
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
+      //this.closeEditMode()
     })
   }
 
   closeEditMode = () => {
     this.setState({
       editMode: false,
-      xlsx: []
+      xlsx: [],
+      isError: false
     })
 
     this.inputFile.value = ''
@@ -146,7 +153,8 @@ class CourseCurriculum extends Component {
       periods,
       xlsx,
       showAlert,
-      isFetching } =  this.state
+      isFetching,
+      isError } =  this.state
     const courseCurriculum = editMode ? xlsx : curriculum
     const itemClass = editMode ? '--edit' : ''
 
@@ -156,7 +164,7 @@ class CourseCurriculum extends Component {
           <div className='header-title'>
             <h2>Grade Curricular</h2>
           </div>
-          <div>
+          <div className='course-curriculum-options'>
             <input
               type='file'
               ref={node => {this.inputFile = node}}
@@ -176,6 +184,7 @@ class CourseCurriculum extends Component {
             onSave={this.handleSubmit}
             onCancel={this.closeEditMode} />
         }
+        { isError && <MessageError errors={['Ocorreu um erro durante a operação.']} /> }
         <CourseCurriculumItem
           editMode={editMode}
           courseCurriculum={courseCurriculum}/>
@@ -186,9 +195,7 @@ class CourseCurriculum extends Component {
             confirm={this.handleDelete}
             text='Ao deletar a grade horária irá deletar todas as ofertas relacionadas. Deseja continuar?'/>
         }
-        {
-          isFetching && <Loading />
-        }
+        { isFetching && <Loading /> }
       </div>
     )
   }

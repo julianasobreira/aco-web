@@ -1,21 +1,25 @@
 import decode from 'jwt-decode'
-const ACCESS_TOKEN_KEY = 'access_token'
+const ACCESS_AUTH_INFO = 'access_auth_info'
 
-export const getToken = () => {
-  return localStorage.getItem(ACCESS_TOKEN_KEY)
+export const getAuthInfo = () => {
+  return JSON.parse(localStorage.getItem(ACCESS_AUTH_INFO))
 }
 
-export const clearToken = () => {
-  localStorage.removeItem(ACCESS_TOKEN_KEY)
+export const clearAuthInfo = () => {
+  localStorage.removeItem(ACCESS_AUTH_INFO)
 }
 
-export const setToken = token => {
-  localStorage.setItem(ACCESS_TOKEN_KEY, token)
+export const setAuthInfo = info => {
+  localStorage.setItem(ACCESS_AUTH_INFO, JSON.stringify(info))
 }
 
 export const isLoggedIn = () => {
-  const token = getToken()
-  return token && !isTokenExpired(token)
+  const info = getAuthInfo()
+  if (!info) {
+    return false
+  }
+  
+  return info.token && !isTokenExpired(info.token)
 }
 
 const getTokenExpirationDate = encodedToken => {

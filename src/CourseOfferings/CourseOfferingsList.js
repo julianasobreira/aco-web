@@ -4,13 +4,22 @@ import axios from 'axios'
 import './CourseOfferings.css'
 
 import CourseOfferingItem from './CourseOfferingItem'
+import Loading from '../Loading/Loading'
+import MessageError from '../MessageError/MessageError'
 
 class CourseOfferingsList extends Component {
   state = {
-    courseOfferings: []
+    courseOfferings: [],
+    isFetching: false,
+    isError: false
   }
 
   componentDidMount () {
+    this.fetchCourseList()
+  }
+
+  fetchCourseList = () => {
+    this.setState({ isFetching: true })
     axios.get(`${process.env.API_URL}/oferta?curso=Engenharia da Computação`)
     .then(({data}) => {
         const horarios = {}
@@ -47,28 +56,42 @@ class CourseOfferingsList extends Component {
         })
 
         this.setState({
-            courseOfferings: orderedCourseOfferings
+            courseOfferings: orderedCourseOfferings,
+            isFetching: false,
+            isError: false
         })
+    })
+    .catch(() => {
+      this.setState({
+          isFetching: false,
+          isError: true
+      })
     })
   }
 
   deleteCourseOffering = semestre => {
+    this.setState({ isFetching: true })
     axios.delete(`${process.env.API_URL}/oferta?curso=Engenharia da Computação&semestre=${semestre}`)
     .then(() => {
-        console.log('Deletado!')
         this.setState(prevState => ({
+          isFetching: false,
+          isError: false,
           courseOfferings: prevState.courseOfferings.filter(courseOffering => courseOffering.semester !== semestre)
         }))
     })
     .catch(error => {
         console.log('Erro: ', error)
+        this.setState({
+          isFetching: false,
+          isError: true
+      })
     })
   }
 
   render() {
-    const { courseOfferings } = this.state
+    const { courseOfferings, isFetching, isError } = this.state
 
-    if (courseOfferings.length === 0) {
+    if (courseOfferings.length === 0 && !isError && !isFetching) {
       return (<div>Não há ofertas adicionadas</div>)
     }
 
@@ -82,6 +105,8 @@ class CourseOfferingsList extends Component {
               deleteCourseOffering={this.deleteCourseOffering} />
           )
         }
+        { isFetching && <Loading /> }
+        { isError && <MessageError errors={['Ocorreu um erro durante a operação.']} /> }
       </Fragment>
     )
   }
