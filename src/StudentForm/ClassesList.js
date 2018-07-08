@@ -7,23 +7,23 @@ const ClassesList = ({ classes, handleInputChange }) => {
   }
 
   if (classes && Object.values(classes).length === 0) {
-    return <div className='student-form-list-message'>Esse curso não possui uma grade curricular adicionada. </div>
+    return <div className='message'>Esse curso não possui uma grade curricular adicionada. </div>
   }
 
   return (
     <Fragment>
      {
-      Object.keys(classes).map(moduleName =>
-        <div key={moduleName}>
-          <h4>{moduleName}</h4>
+      Object.keys(classes).map((module, moduleIndex) =>
+        <div key={moduleIndex}>
+          <h4>{module}</h4>
           {
-            classes[moduleName].map(item =>
-              <div className='student-form-list-item' key={item.codDisciplina}>
+            classes[module].map((item, itemIndex) =>
+              <div className='student-form-list-item' key={itemIndex}>
                 <input
                   name={item.codDisciplina}
                   type='checkbox'
-                  value={item.codDisciplina}
-                  onChange={e => handleInputChange(e, item)} />
+                  checked={item.done}
+                  onChange={e => handleInputChange(e, module, itemIndex)} />
                 <span>{`${item.codDisciplina} - ${item.nome}`}</span>
               </div>   
             )

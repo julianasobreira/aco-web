@@ -1,5 +1,6 @@
 export const ACCESS_AUTH_INFO = 'access_auth_info'
 export const ACCESS_SOLUTION_INFO = 'access_solution_info'
+export const ACCESS_FORM_INFO = 'access_form_info'
 
 export const getInfo = key => {
   return JSON.parse(localStorage.getItem(key))

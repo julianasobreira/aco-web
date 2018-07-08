@@ -6,7 +6,8 @@ import {
   getInfo, 
   setInfo, 
   ACCESS_AUTH_INFO,
-  ACCESS_SOLUTION_INFO } from '../utils/localStorage'
+  ACCESS_SOLUTION_INFO,
+  ACCESS_FORM_INFO } from '../utils/localStorage'
 import { Redirect } from 'react-router-dom'
 
 import './StudentForm.css'
@@ -23,7 +24,6 @@ class StudentForm extends Component {
     classes: null,
     semester: '',
     semesters: null,
-    done: [],
     messageErrors: [],
     isFetching: false,
     isSolutionSuccess: false,
@@ -32,25 +32,30 @@ class StudentForm extends Component {
 
   componentDidMount () {
     this.userInfo = getInfo(ACCESS_AUTH_INFO)
-    this.setState({ isFetching: true })
-    axios.get(`${process.env.API_URL}/cursos`)
-    .then(response => {
-      const courses = response.data.map(course => ({
-        value: course.id,
-        label: course.nome
-      }))
-      this.setState({
-        isFetching: false,
-        isError: false,
-        courses
-      })
-    })
-    .catch(error => {
-      this.setState({
-        isFetching: false,
-        isError: true
-      })
-    })
+    const state = getInfo(ACCESS_FORM_INFO)
+    if (state) {
+      this.setState({ ...state })
+    } else {
+      this.setState({ isFetching: true })
+        axios.get(`${process.env.API_URL}/cursos`)
+        .then(response => {
+          const courses = response.data.map(course => ({
+            value: course.id,
+            label: course.nome
+          }))
+          this.setState({
+            isFetching: false,
+            isError: false,
+            courses
+          })
+        })
+        .catch(error => {
+          this.setState({
+            isFetching: false,
+            isError: true
+          })
+        })
+    }
   }
 
   fetchClasses = () => {
@@ -60,15 +65,20 @@ class StudentForm extends Component {
     .then(response => {
       const { disciplinas, semestres } = response.data
       const courseModules = {}
-      disciplinas.forEach(classItem => {
+      disciplinas.forEach(item => {
+        const updatedItem = {
+          ...item,
+          done: false
+        }
+
         // divindindo as disciplinas por ciclo
-        if (courseModules[classItem.ciclo]) {
-          courseModules[classItem.ciclo] = [
-            ...courseModules[classItem.ciclo],
-            classItem
+        if (courseModules[item.ciclo]) {
+          courseModules[item.ciclo] = [
+            ...courseModules[item.ciclo],
+            updatedItem
           ]
         } else {
-          courseModules[classItem.ciclo] = [classItem]
+          courseModules[item.ciclo] = [updatedItem]
         }
       })
       this.setState({
@@ -88,9 +98,13 @@ class StudentForm extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault()
-    const {course, done, semester} = this.state
-
+    const {course, semester} = this.state
+    const done = Object.values(this.state.classes)
+      .reduce((module, allCourses) => [...allCourses, ...module], [])
+      .filter(course => course.done)
     const messageErrors = []
+    setInfo(ACCESS_FORM_INFO, this.state)
+
     if (!semester) {
       messageErrors.push('Escolha uma oferta')
     }
@@ -126,7 +140,6 @@ class StudentForm extends Component {
   }
 
   handleSelectCourse = item => {
-    console.log(item)
     this.setState({
       course: { ...item }
     }, this.fetchClasses)
@@ -136,18 +149,22 @@ class StudentForm extends Component {
     this.setState({ semester: item.value })
   }
 
-  handleInputChange = (e, item) => {
-    const { value, name } = e.target
-    this.setState(prevState => {
-      if (value) {
-        return {
-          done: [...prevState.done, item]
-        }
+  handleInputChange = (e, module, index) => {
+    const { checked } = e.target
+
+    this.setState(prevState => ({
+      classes: {
+        ...prevState.classes,
+        [module]: [
+          ...prevState.classes[module].slice(0, index),
+          {
+            ...prevState.classes[module][index],
+            done: checked
+          },
+          ...prevState.classes[module].slice(index + 1)
+        ]
       }
-      return {
-        done: prevState.done.filter(item => item.codDisciplina !== name)
-      }
-    })
+    }))
   }
 
   render() {
