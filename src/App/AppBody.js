@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { isLoggedIn } from '../utils/auth'
+import { ACCESS_AUTH_INFO } from '../utils/localStorage'
 import StudentForm from '../StudentForm/StudentForm'
 import AdminPage from '../AdminPage/AdminPage'
 import Diagram from '../Diagram/Diagram'
@@ -17,7 +18,7 @@ const AppBody = ({ isFetching }) => {
           <Route exact path='/horario' component={ClassSchedule} />
           <Route path='/admin' render={ props => {
             return ( 
-              isLoggedIn()
+              isLoggedIn(ACCESS_AUTH_INFO)
                 ? <AdminPage {...props} isFetching={isFetching} />
                 : <Redirect
                   to={{

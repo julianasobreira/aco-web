@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import enhanceWithClickOutside from 'react-click-outside'
+
 import './Menu.css'
 
 class Menu extends Component {
   state = { isOpen: false }
+
+  handleClickOutside() {
+    this.handleMenu();
+  }
 
   handleMenu = () => {
     this.setState(prevState => ({
@@ -15,8 +21,7 @@ class Menu extends Component {
     return (
       <div
         className='menu'
-        onMouseEnter={this.handleMenu}
-        onMouseLeave={this.handleMenu}>
+        onClick={this.handleMenu}>
         <div className='menu-button'>Menu</div>
         { this.state.isOpen &&
           <ul className='menu-list'>
@@ -39,4 +44,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export default enhanceWithClickOutside(Menu)
