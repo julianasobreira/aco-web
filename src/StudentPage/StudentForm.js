@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import axios from 'axios'
+import { getInfo } from '../utils/localStorage'
 
 import './StudentForm.css'
 import 'react-select/dist/react-select.css'
@@ -24,6 +25,7 @@ class StudentForm extends Component {
   }
 
   componentDidMount () {
+    this.userInfo = getInfo('access_auth_info')
     this.setState({ isFetching: true })
     axios.get(`${process.env.API_URL}/cursos`)
     .then(response => {
@@ -46,7 +48,6 @@ class StudentForm extends Component {
   }
 
   fetchClasses = () => {
-    const { isFetching } = this.props
     this.setState({ isFetching: true })
 
     axios.get(`${process.env.API_URL}/curso?curso=${this.state.course.value}`)
@@ -81,7 +82,7 @@ class StudentForm extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault()
-    const { isFetching, handleSolution } = this.props
+    const { handleSolution } = this.props
     const {course, done, semester} = this.state
 
     const messageErrors = []

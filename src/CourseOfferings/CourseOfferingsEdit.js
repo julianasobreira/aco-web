@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import PropTypes from 'prop-types'
-import { getAuthInfo } from '../utils/auth'
+import { getInfo } from '../utils/localStorage'
 
 import './CourseOfferings.css'
 
@@ -23,7 +23,7 @@ class CourseOfferingsEdit extends Component {
   userInfo = null
 
   componentDidMount () {
-    this.userInfo = getAuthInfo()
+    this.userInfo = getInfo('access_auth_info')
   }
 
   componentWillMount () {

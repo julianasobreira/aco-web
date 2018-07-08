@@ -1,20 +1,9 @@
 import decode from 'jwt-decode'
-const ACCESS_AUTH_INFO = 'access_auth_info'
+import { setInfo, getInfo} from './localStorage'
 
-export const getAuthInfo = () => {
-  return JSON.parse(localStorage.getItem(ACCESS_AUTH_INFO))
-}
 
-export const clearAuthInfo = () => {
-  localStorage.removeItem(ACCESS_AUTH_INFO)
-}
-
-export const setAuthInfo = info => {
-  localStorage.setItem(ACCESS_AUTH_INFO, JSON.stringify(info))
-}
-
-export const isLoggedIn = () => {
-  const info = getAuthInfo()
+export const isLoggedIn = key => {
+  const info = getInfo(key)
   if (!info) {
     return false
   }
