@@ -4,13 +4,6 @@
   width: 100%;
 }
 
-.app-container {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 500px;
-  padding: 0 30px;
-}
-
 .app-header {
   display: flex;
   flex-direction: column;
@@ -31,12 +24,6 @@
   margin: 0;
 }
 
-@media (min-width: 480px) {
-  .app-header {
-    font-size: 1.4em;
-  }
-}
-
 .app-header-container {
   max-width: 700px;
   padding: 40px 0 25px 0;
@@ -44,14 +31,18 @@
   text-align: center;
 }
 
-.app-header-title {
+.app-header-subtitle {
   font-size: 16px;
   margin: 0;
 }
 
-@media (min-width: 480px) {
-  .app-header {
-    font-size: 1.4em;
+@media (max-width: 480px) {
+  .app-header-title {
+    font-size: 28px;
+  }
+
+  .app-header-subtitle {
+    font-size: 16px;
   }
 }
 
@@ -86,6 +77,7 @@
   align-items: center;
   align-items: center;
   max-width: 700px;
+  padding: 0 10px;
 }
 
 .login-button {

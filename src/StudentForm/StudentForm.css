@@ -3,7 +3,7 @@
 }
 
 .student-form-select {
-  width: 500px;
+  max-width: 500px;
 }
 
 .student-form-button {

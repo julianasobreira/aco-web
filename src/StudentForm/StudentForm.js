@@ -146,7 +146,7 @@ class StudentForm extends Component {
   }
 
   handleSelectSemester = item => {
-    this.setState({ semester: item.value })
+    this.setState({ semester: item && item.value })
   }
 
   handleInputChange = (e, module, index) => {
