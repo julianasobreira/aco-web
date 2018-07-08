@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import axios from 'axios'
-import { getInfo } from '../utils/localStorage'
+import { 
+  getInfo, 
+  setInfo, 
+  ACCESS_AUTH_INFO,
+  ACCESS_SOLUTION_INFO } from '../utils/localStorage'
+import { Redirect } from 'react-router-dom'
 
 import './StudentForm.css'
 import 'react-select/dist/react-select.css'
@@ -21,11 +26,12 @@ class StudentForm extends Component {
     done: [],
     messageErrors: [],
     isFetching: false,
+    isSolutionSuccess: false,
     isError: false
   }
 
   componentDidMount () {
-    this.userInfo = getInfo('access_auth_info')
+    this.userInfo = getInfo(ACCESS_AUTH_INFO)
     this.setState({ isFetching: true })
     axios.get(`${process.env.API_URL}/cursos`)
     .then(response => {
@@ -82,7 +88,6 @@ class StudentForm extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault()
-    const { handleSolution } = this.props
     const {course, done, semester} = this.state
 
     const messageErrors = []
@@ -105,9 +110,10 @@ class StudentForm extends Component {
     axios.post(`${process.env.API_URL}/solucao?curso=${course.value}&semestre=${semester}`, done)
     .then(response => {
       const classesGrid = response.data
-      handleSolution(classesGrid)
+      setInfo(ACCESS_SOLUTION_INFO, classesGrid)
       this.setState({
         isFetching: false,
+        isSolutionSuccess: true,
         isError: false
       })
     })
@@ -153,7 +159,12 @@ class StudentForm extends Component {
       semesters,
       messageErrors,
       isError,
-      isFetching } = this.state
+      isFetching,
+      isSolutionSuccess } = this.state
+
+    if (isSolutionSuccess) {
+      return <Redirect to={'/horario'} />;
+    }
 
     return (
       <div className='student-form'>
@@ -198,10 +209,6 @@ class StudentForm extends Component {
       </div>
     )
   }
-}
-
-StudentForm.propTypes = {
-  handleSolution: PropTypes.func,
 }
 
 export default StudentForm

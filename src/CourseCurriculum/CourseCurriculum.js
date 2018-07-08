@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import XLSX from 'xlsx'
 import axios from 'axios'
-import { getInfo } from '../utils/localStorage'
+import { getInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 
 import './CourseCurriculum.css'
 
@@ -30,7 +30,7 @@ class CourseCurriculum extends Component {
   userInfo = null
 
   componentDidMount () {
-    this.userInfo = getInfo('access_auth_info')
+    this.userInfo = getInfo(ACCESS_AUTH_INFO)
     this.fetchCurriculum()
   }
 

@@ -48,3 +48,10 @@ h2 {
   -moz-transition: all 0.3s;
   transition: all 0.3s;
 }
+
+.message {
+  margin-top: 40px;
+  font-style: italic;
+  text-align: center;
+  color: #888;
+}

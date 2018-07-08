@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import md5 from 'md5'
-import { setInfo } from '../utils/localStorage'
+import { setInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 import { Redirect } from 'react-router-dom'
 import Loading from '../Loading/Loading'
 import './Login.css';
@@ -35,7 +35,7 @@ class Login extends Component {
     })
     axios.post(`${process.env.API_URL}/login`, {email, senha: md5(senha)})
       .then(response => {
-        setInfo('access_auth_info', response.data)
+        setInfo(ACCESS_AUTH_INFO, response.data)
         this.setState({
           loginSuccess: true,
           loginError: false,

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
-import { getInfo } from '../utils/localStorage'
+import { getInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 
 import './CourseOfferings.css'
 
@@ -17,7 +17,7 @@ class CourseOfferingsList extends Component {
   userInfo = null
 
   componentDidMount () {
-    this.userInfo = getInfo('access_auth_info')
+    this.userInfo = getInfo(ACCESS_AUTH_INFO)
     this.fetchCourseList()
   }
 
