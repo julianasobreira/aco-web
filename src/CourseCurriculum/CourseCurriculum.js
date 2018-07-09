@@ -1,15 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import XLSX from 'xlsx'
 import axios from 'axios'
 import { getInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 
 import './CourseCurriculum.css'
 
-import fieldsValidation from '../utils/fieldsValidation'
-
 import Button from '../Button/Button'
-import FormField from '../FormField/FormField'
-import FormList from '../FormList/FormList'
 import EditMenu from '../EditMenu/EditMenu'
 import CourseCurriculumItem from './CourseCurriculumItem'
 import Alert from '../Alert/Alert'
@@ -126,11 +122,10 @@ class CourseCurriculum extends Component {
 
   handleFileUpload = e => {
     const files = e.target.files
-    if (!files || files.length == 0) return
+    if (!files || files.length === 0) return
     const file = files[0]
     const fileReader = new FileReader()
     fileReader.onload = e => {
-      const filename = file.name
       // pre-process data
       let binary = ''
       const bytes = new Uint8Array(e.target.result)
@@ -153,13 +148,11 @@ class CourseCurriculum extends Component {
     const { 
       editMode,
       curriculum,
-      periods,
       xlsx,
       showAlert,
       isFetching,
       isError } =  this.state
     const courseCurriculum = editMode ? xlsx : curriculum
-    const itemClass = editMode ? '--edit' : ''
 
     return (
       <div>

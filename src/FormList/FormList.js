@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './FormList.css'
 
 const FormList = ({label = '', type = 'text', list = [] }) => {

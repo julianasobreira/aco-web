@@ -1,6 +1,5 @@
 import React from 'react'
 import './EditMenu.css'
-import Select from 'react-select'
 
 const EditMenu = ({onSave, onCancel}) => {
   return (

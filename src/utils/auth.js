@@ -1,5 +1,5 @@
 import decode from 'jwt-decode'
-import { setInfo, getInfo} from './localStorage'
+import { getInfo} from './localStorage'
 
 
 export const isLoggedIn = key => {

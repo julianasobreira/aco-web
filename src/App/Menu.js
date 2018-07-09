@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import enhanceWithClickOutside from 'react-click-outside'
 
 import './Menu.css'
 

@@ -5,7 +5,6 @@ import AppNav from './AppNav';
 
 class AppHeader extends Component {
   render() {
-    const {pathname} = this.props.location
     return (
       <header className='app-header'>
         <AppNav />

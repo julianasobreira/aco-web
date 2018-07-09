@@ -12,7 +12,7 @@ class CourseCurriculumItem extends Component {
   render() {
     const { courseCurriculum, editMode } =  this.props
     const itemClass = editMode ? '--edit' : ''
-    const { number, weekday, classCode, offeringCode } = fieldsValidation
+    const { number, classCode } = fieldsValidation
 
     if (courseCurriculum.length === 0) {
       return (<div>Não há grade curricular adicionada.</div>)
