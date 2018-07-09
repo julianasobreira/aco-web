@@ -163,7 +163,7 @@ class CourseCurriculum extends Component {
 
     return (
       <div>
-        <div className='admin-page-header'>
+        <div className='course-curriculum-header'>
           <div className='header-title'>
             <h2>Grade Curricular</h2>
           </div>

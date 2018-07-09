@@ -1,11 +1,11 @@
 .admin-page {
-  width: 100%;
+  width: 700px;
 }
 
-.admin-page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@media (max-width: 720px) {
+  .admin-page{
+    width: 100%;
+  }
 }
 
 .upload-input {

@@ -14,3 +14,10 @@
 .button:focus {
   outline: none;
 }
+
+@media (max-width: 600px) {
+  .button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}

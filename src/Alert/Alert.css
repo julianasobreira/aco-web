@@ -17,9 +17,10 @@
   width: 350px;
   padding: 30px;
   background-color: #fff;
-  border-radius: 15px;
   z-index: 2;
   overflow: hidden;
+  border-radius: 13px;
+  box-shadow: 0 .1rem .4rem rgba(0,0,0,0.3), 0 .1rem .4rem rgba(0,0,0,0.3);
 }
 
 .alert-container-text {

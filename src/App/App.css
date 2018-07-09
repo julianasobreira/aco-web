@@ -74,13 +74,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  align-items: center;
-  width: 700px;
+  width: 850px;
   padding: 0 10px;
 }
 
 @media (max-width: 650px) {
-  width: 100%;
+  .app-body-container{
+    width: 100%;
+  }
 }
 
 .login-button {

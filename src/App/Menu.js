@@ -7,10 +7,6 @@ import './Menu.css'
 class Menu extends Component {
   state = { isOpen: false }
 
-  handleClickOutside() {
-    this.handleMenu();
-  }
-
   handleMenu = () => {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
@@ -44,4 +40,4 @@ class Menu extends Component {
   }
 }
 
-export default enhanceWithClickOutside(Menu)
+export default Menu

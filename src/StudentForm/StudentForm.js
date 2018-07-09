@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import axios from 'axios'
@@ -103,7 +103,12 @@ class StudentForm extends Component {
       .reduce((module, allCourses) => [...allCourses, ...module], [])
       .filter(course => course.done)
     const messageErrors = []
-    setInfo(ACCESS_FORM_INFO, this.state)
+    setInfo(ACCESS_FORM_INFO, {
+      ...this.state,
+      isFetching: false,
+      isError: false,
+      messageErrors: []
+    })
 
     if (!semester) {
       messageErrors.push('Escolha uma oferta')
@@ -184,45 +189,47 @@ class StudentForm extends Component {
     }
 
     return (
-      <div className='student-form'>
-        <h3>Curso</h3>
-        { isError &&
-          <MessageError errors={['Ocorreu um erro durante essa operação.']} />
-        }
-        <Select
-          className='student-form-select'
-          name='course'
-          value={course && course.value}
-          onChange={this.handleSelectCourse}
-          options={courses}
-        />
-        { semesters &&
-          <div>
-            <h3>Ofertas</h3>
-            <Select
-              className='student-form-select'
-              name='semester'
-              value={semester}
-              onChange={this.handleSelectSemester}
-              options={semesters}
-            />
-          </div>
-        }
-        { classes &&
-          <div>
-            <h3>Disciplinas Cursadas</h3>
-            <form className='student-form-list' onSubmit={this.handleFormSubmit}>
-              <ClassesList 
-                classes={ classes }
-                handleInputChange={ this.handleInputChange } />
-              { messageErrors.length > 0 &&
-                <MessageError errors={messageErrors} />
-              }
-              <button className='student-form-button' type='submit'>Gerar grade</button>
-            </form>
-          </div>
-        }
-        { isFetching && <Loading /> }
+      <div>
+        <div className='student-form'>
+          <h3>Curso</h3>
+          { isError &&
+            <MessageError errors={['Ocorreu um erro durante essa operação.']} />
+          }
+          <Select
+            className='student-form-select'
+            name='course'
+            value={course && course.value}
+            onChange={this.handleSelectCourse}
+            options={courses}
+          />
+          { semesters &&
+            <Fragment>
+              <h3>Ofertas</h3>
+              <Select
+                className='student-form-select'
+                name='semester'
+                value={semester}
+                onChange={this.handleSelectSemester}
+                options={semesters}
+              />
+            </Fragment>
+          }
+          { classes &&
+            <div>
+              <h3>Disciplinas Cursadas</h3>
+              <form className='student-form-list' onSubmit={this.handleFormSubmit}>
+                <ClassesList 
+                  classes={ classes }
+                  handleInputChange={ this.handleInputChange } />
+                { messageErrors.length > 0 &&
+                  <MessageError errors={messageErrors} />
+                }
+                <button className='student-form-button' type='submit'>Gerar grade</button>
+              </form>
+            </div>
+          }
+          { isFetching && <Loading /> }
+        </div>
       </div>
     )
   }
