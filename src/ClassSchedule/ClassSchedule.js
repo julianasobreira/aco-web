@@ -6,6 +6,7 @@ import {
   getInfo,
   ACCESS_SOLUTION_INFO } from '../utils/localStorage'
 import { Redirect } from 'react-router-dom'
+import FileSaver from 'file-saver'
 
 import './ClassSchedule.css'
 
@@ -44,11 +45,9 @@ class ClassSchedule extends Component {
   downloadSolutionGrid = () => {
     html2canvas(this.solutionGrid)
       .then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        pdf.addImage(imgData, 'PNG', 10, 30, 180, 110);
-        pdf.output('dataurlnewwindow');
-        pdf.save('horário otimizado.pdf');
+        canvas.toBlob(function(blob) {
+          FileSaver.saveAs(blob, "pretty image.png");
+        });
       })
   }
 
