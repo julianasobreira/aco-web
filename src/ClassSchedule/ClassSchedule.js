@@ -1,12 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import XLSX from 'xlsx'
 import { 
   getInfo,
   ACCESS_SOLUTION_INFO } from '../utils/localStorage'
 import { Redirect } from 'react-router-dom'
-import FileSaver from 'file-saver'
 
 import './ClassSchedule.css'
 
@@ -19,6 +17,21 @@ const initialClassesGrid = {
   14: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   16: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' }
 }
+
+const hourColumns = {
+  8: '08:00 - 10:00',
+  10: '10:00 - 12:00',
+  14: '14:00 - 16:00',
+  16: '16:00 - 18:00'
+}
+
+const daysHeader = [
+  'Segunda-feira',
+  'Terça-feira',
+  'Quarta-feira',
+  'Quinta-feira',
+  'Sexta-feira'
+]
 
 class ClassSchedule extends Component {
   state = {
@@ -43,12 +56,39 @@ class ClassSchedule extends Component {
   }
 
   downloadSolutionGrid = () => {
-    html2canvas(this.solutionGrid)
-      .then(canvas => {
-        canvas.toBlob(function(blob) {
-          FileSaver.saveAs(blob, "pretty image.png");
-        });
-      })
+    const classesGridFormated = this.formatGrid(this.state.solution)
+    const data = Object.keys(classesGridFormated).map(hour => ([
+        hourColumns[hour],
+        ...Object.values(classesGridFormated[hour])
+      ]));
+
+
+    const ws = XLSX.utils.aoa_to_sheet([['', ...daysHeader], ...data]);
+    const wb = XLSX.utils.book_new();
+
+    const initialWscols = [
+      {wch: 0},
+      {wch: 0},
+      {wch: 0},
+      {wch: 0},
+      {wch: 0},
+      {wch: 0},
+    ];
+
+    const wscols = data.reduce((finalWscols, row) =>
+      row.map((cell, index) => {
+        if (cell.length > finalWscols[index].wch) {
+          return {
+            wch: cell.length
+          }
+        }
+
+        return finalWscols[index]
+      }), initialWscols)
+
+    ws['!cols'] = wscols;
+    XLSX.utils.book_append_sheet(wb, ws, 'Horário');
+    XLSX.writeFile(wb, 'horário.xlsx');
   }
 
   redirectToHome = () => {
@@ -75,16 +115,16 @@ class ClassSchedule extends Component {
                 <ClassScheduleHeader />
                 <ClassScheduleRow 
                   classes={ classesGridFormated['8'] }
-                  rowHeader='08:00 - 10:00' />
+                  rowHeader={hourColumns[8]} />
                 <ClassScheduleRow 
                   classes={ classesGridFormated['10'] }
-                  rowHeader='10:00 - 12:00' />
+                  rowHeader={hourColumns[10]} />
                 <ClassScheduleRow 
                   classes={ classesGridFormated['14'] }
-                  rowHeader='14:00 - 16:00' />
+                  rowHeader={hourColumns[14]} />
                 <ClassScheduleRow 
                   classes={ classesGridFormated['16'] }
-                  rowHeader='16:00 - 18:00' />
+                  rowHeader={hourColumns[16]} />
               </div>
             : <div className='message'>Retorne ao formulário e preencha seus campos.</div>
           }
