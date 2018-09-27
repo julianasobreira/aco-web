@@ -29,6 +29,9 @@ class CourseOfferings extends Component {
 
       const workbook = XLSX.read(binary, {type: 'binary'})
       const sheet = workbook.Sheets[workbook.SheetNames[0]]
+      const range = XLSX.utils.decode_range(sheet['!ref']);
+      range.s.r = 1; // <-- zero-indexed, so setting to 1 will skip row 0
+      sheet['!ref'] = XLSX.utils.encode_range(range);
       const uploadedCourseOfferings = XLSX.utils.sheet_to_json(sheet, {header: 1, blankrows: false})
       this.setState({
         uploadedCourseOfferings: this.convertArrayToObject(uploadedCourseOfferings),
