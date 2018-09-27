@@ -14,6 +14,7 @@ import ClassScheduleHeader from './ClassScheduleHeader'
 const initialClassesGrid = {
   8: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   10: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
+  12: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   14: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   16: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' }
 }
@@ -21,6 +22,7 @@ const initialClassesGrid = {
 const hourColumns = {
   8: '08:00 - 10:00',
   10: '10:00 - 12:00',
+  12: '12:00 - 14:00',
   14: '14:00 - 16:00',
   16: '16:00 - 18:00'
 }
@@ -40,9 +42,11 @@ class ClassSchedule extends Component {
   }
 
   componentDidMount () {
-    this.setState({
-      solution: getInfo(ACCESS_SOLUTION_INFO)
-    })
+    setTimeout(() => {
+      this.setState({
+        solution: getInfo(ACCESS_SOLUTION_INFO)
+      });
+    }, 30);
   }
 
   formatGrid (classesGrid) {
@@ -119,6 +123,9 @@ class ClassSchedule extends Component {
                 <ClassScheduleRow 
                   classes={ classesGridFormated['10'] }
                   rowHeader={hourColumns[10]} />
+                <ClassScheduleRow 
+                  classes={ classesGridFormated['12'] }
+                  rowHeader={hourColumns[12]} />
                 <ClassScheduleRow 
                   classes={ classesGridFormated['14'] }
                   rowHeader={hourColumns[14]} />
