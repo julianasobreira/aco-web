@@ -4,7 +4,6 @@ import axios from 'axios'
 import { 
   getInfo,
   setInfo,
-  clearAllInfo,
   ACCESS_AUTH_INFO,
   ACCESS_SOLUTION_INFO,
   ACCESS_FORM_INFO } from '../utils/localStorage'
@@ -144,13 +143,6 @@ class StudentForm extends Component {
       }))
 
       setInfo(ACCESS_SOLUTION_INFO, classesGrid)
-      
-      const allClasses = [
-        ...classes['CICLO GERAL OU CICLO BÁSICO'],
-        ...classes['CICLO PROFISSIONAL OU TRONCO COMUM'],
-        ...classes['COMPONENTES OPTATIVOS - DISCIPLINAS OPTATIVAS']
-      ]
-
       setInfo(ACCESS_FORM_INFO, {
         semester: semester,
         course: course,
@@ -182,8 +174,6 @@ class StudentForm extends Component {
   }
 
   handleInputChange = (e, codDisciplina) => {
-    const { checked } = e.target
-
     this.setState(prevState => ({
       allClassesDone: [
         ...prevState.allClassesDone,

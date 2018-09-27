@@ -5,8 +5,11 @@ class Helper extends Component {
     return (
       <section className='helper'>
         <div className='helper-container'>
+          <i className='fa fa-info-circle'></i> 
           <div className='helper-container-text'>
-            teste
+            Essa aplicação pretende ajudar aos discentes a montar uma grade horária que minimize atrasos durante a época de matrícula.
+            Preencha os dados abaixo para obter sua grade sugerida. 
+            <a className='helper-container-text-link'> Saiba mais.</a>
           </div>
         </div>
       </section>

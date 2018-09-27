@@ -77,8 +77,10 @@ class CourseOfferings extends Component {
             accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel'
             onChange={this.handleFileUpload} />
           <label
-            htmlFor='upload-planilha'
-            className='admin-page-link'>Upload nova oferta</label>
+            className='course-offerings-label'
+            htmlFor='upload-planilha'>
+              <i className='fa fa-upload'></i> Upload nova oferta
+            </label>
         </div>
         { editMode
           ? <CourseOfferingsEdit

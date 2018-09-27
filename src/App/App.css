@@ -111,14 +111,29 @@
 }
 
 .helper-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 700px;
+  color: rgb(122, 134, 154);
+}
+
+.helper-container i {
+  font-size: 1.4rem;
 }
 
 .helper-container-text {
-  color: rgb(122, 134, 154);
+  font-size: 0.8rem;
   display: inline-block;
   position: relative;
-  white-space: nowrap;
-  padding: 15px 20px;
+  padding: 20px 10px;
   text-decoration: none;
+}
+
+.helper-container-text-link {
+  cursor: pointer;
+}
+
+.helper-container-text-link:hover {
+  color: #2684ff;
 }

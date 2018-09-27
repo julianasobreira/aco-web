@@ -174,7 +174,9 @@ class CourseCurriculum extends Component {
               onChange={this.handleFileUpload} />
             <label
               htmlFor='upload-planilha'
-              className='admin-page-link'>Upload Nova Grade Curricular</label>
+              className='course-curriculum-label'>
+              <i className='fa fa-upload'></i> Upload Nova Grade Curricular
+            </label>
             <Button text='Deletar Grade' action={this.showAlert} />
           </div>
         </div>

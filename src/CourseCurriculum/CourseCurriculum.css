@@ -9,8 +9,18 @@
   background-color: #f1eeee; 
 }
 
+.course-curriculum-options {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 70%;
+}
+
 .course-curriculum-options > label {
   margin-right: 20px;
+  margin-bottom: 0; 
+  display: flex;
+  align-items: center;
 }
 
 .course-curriculum-header {
@@ -20,10 +30,30 @@
   align-items: center;
 }
 
+.course-curriculum-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: rgb(122, 134, 154);
+  cursor: pointer;
+}
+
+.course-curriculum-label:hover {
+  color: #495057;
+}
+
+.course-curriculum-label i {
+  margin-right: 7px;
+}
+
 @media (max-width: 600px) {
   .course-curriculum-header {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 20px;
+  }
+
+  .course-curriculum-options {
+    justify-content: flex-start;
   }
 }

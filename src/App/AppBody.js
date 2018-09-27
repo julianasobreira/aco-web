@@ -5,7 +5,6 @@ import { isLoggedIn } from '../utils/auth'
 import { ACCESS_AUTH_INFO } from '../utils/localStorage'
 import StudentForm from '../StudentForm/StudentForm'
 import AdminPage from '../AdminPage/AdminPage'
-import Diagram from '../Diagram/Diagram'
 import ClassSchedule from '../ClassSchedule/ClassSchedule'
 
 const AppBody = ({ isFetching }) => {
@@ -14,7 +13,6 @@ const AppBody = ({ isFetching }) => {
       <div className='app-body-container'>
         <Switch>
           <Route exact path='/' component={StudentForm} />
-          <Route exact path='/grade-curricular' component={Diagram} />
           <Route exact path='/horario' component={ClassSchedule} />
           <Route path='/admin' render={ props => {
             return ( 

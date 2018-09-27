@@ -20,3 +20,19 @@
 .course-offerings-checkbox-control {
   margin-right: 10px;
 }
+
+.course-offerings-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: rgb(122, 134, 154);
+  cursor: pointer;
+}
+
+.course-offerings-label:hover {
+  color: #495057;
+}
+
+.course-offerings-label i {
+  margin-right: 7px;
+}
