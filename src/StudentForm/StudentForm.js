@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
 import { 
-  getInfo, 
-  setInfo, 
+  getInfo,
+  setInfo,
+  clearAllInfo,
   ACCESS_AUTH_INFO,
   ACCESS_SOLUTION_INFO,
   ACCESS_FORM_INFO } from '../utils/localStorage'
@@ -21,6 +22,7 @@ class StudentForm extends Component {
     course: null,
     courses: [],
     classes: null,
+    allClassesDone: [],
     semester: '',
     semesters: null,
     messageErrors: [],
@@ -31,60 +33,59 @@ class StudentForm extends Component {
 
   componentDidMount () {
     this.userInfo = getInfo(ACCESS_AUTH_INFO)
-    const state = getInfo(ACCESS_FORM_INFO)
-    if (state) {
-      this.setState({ ...state })
-    } else {
-      this.setState({ isFetching: true })
-        axios.get(`${process.env.API_URL}/cursos`)
-        .then(response => {
-          const courses = response.data.map(course => ({
-            value: course.id,
-            label: course.nome
-          }))
-          this.setState({
-            isFetching: false,
-            isError: false,
-            courses
-          })
-        })
-        .catch(error => {
-          this.setState({
-            isFetching: false,
-            isError: true
-          })
-        })
-    }
+
+    this.setState({ isFetching: true })
+    axios.get(`${process.env.API_URL}/cursos`)
+    .then(response => {
+      const courses = response.data.map(course => ({
+        value: course.id,
+        label: course.nome
+      }))
+
+      this.setState({
+        isFetching: false,
+        isError: false,
+        courses
+      })
+
+    })
+    .catch(error => {
+      this.setState({
+        isFetching: false,
+        isError: true
+      })
+    })
   }
 
-  fetchClasses = () => {
+  fetchClasses = (course) => {
     this.setState({ isFetching: true })
 
-    axios.get(`${process.env.API_URL}/curso?curso=${this.state.course.value}`)
+    axios.get(`${process.env.API_URL}/curso?curso=${course}`)
     .then(response => {
       const { disciplinas, semestres } = response.data
       const courseModules = {}
       disciplinas.forEach(item => {
-        const updatedItem = {
-          ...item,
-          done: false
-        }
-
         // divindindo as disciplinas por ciclo
         if (courseModules[item.ciclo]) {
           courseModules[item.ciclo] = [
             ...courseModules[item.ciclo],
-            updatedItem
+            item
           ]
         } else {
-          courseModules[item.ciclo] = [updatedItem]
+          courseModules[item.ciclo] = [item]
         }
       })
+
+      const state = getInfo(ACCESS_FORM_INFO)
+      const semester = semestres.find(semestre => semestre === state.semester);
+
       this.setState({
         isFetching: false,
         isError: false,
         classes: courseModules,
-        semesters: semestres.map(semester => ({ value: semester, label: semester }))
+        semesters: semestres.map(semester => ({ value: semester, label: semester })),
+        allClassesDone: state.allClassesDone,
+        semester: semester || ''
       })
     })
     .catch(error => {
@@ -97,23 +98,23 @@ class StudentForm extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault()
-    const {course, semester} = this.state
-    const done = Object.values(this.state.classes)
+    const {
+      course,
+      semester,
+      allClassesDone,
+      classes } = this.state
+
+    const done = Object.values(classes)
       .reduce((module, allCourses) => [...allCourses, ...module], [])
-      .filter(course => course.done)
+      .filter(course => allClassesDone.find(item => item === course.codDisciplina))
+
     const messageErrors = []
-    setInfo(ACCESS_FORM_INFO, {
-      ...this.state,
-      isFetching: false,
-      isError: false,
-      messageErrors: []
-    })
 
     if (!semester) {
       messageErrors.push('Escolha uma oferta')
     }
 
-    if (done.length === 0) {
+    if (allClassesDone.length === 0) {
       messageErrors.push('Selecione as disciplinas que você cursou')
     }
 
@@ -127,8 +128,27 @@ class StudentForm extends Component {
     this.setState({ isFetching: true })
     axios.post(`${process.env.API_URL}/solucao?curso=${course.value}&semestre=${semester}`, done)
     .then(response => {
-      const classesGrid = response.data
+      const classesGrid = response.data.map(item => ({
+        dia: item.dia,
+        codOferta: item.codOferta,
+        horarioInicial: item.horarioInicial,
+        disciplinaOfertada: item.disciplinaOfertada.nome
+      }))
+
       setInfo(ACCESS_SOLUTION_INFO, classesGrid)
+      
+      const allClasses = [
+        ...classes['CICLO GERAL OU CICLO BÁSICO'],
+        ...classes['CICLO PROFISSIONAL OU TRONCO COMUM'],
+        ...classes['COMPONENTES OPTATIVOS - DISCIPLINAS OPTATIVAS']
+      ]
+
+      setInfo(ACCESS_FORM_INFO, {
+        semester: semester,
+        courseId: course.value,
+        allClassesDone
+      })
+
       this.setState({
         isFetching: false,
         isSolutionSuccess: true,
@@ -146,28 +166,21 @@ class StudentForm extends Component {
   handleSelectCourse = item => {
     this.setState({
       course: { ...item }
-    }, this.fetchClasses)
+    }, () => { this.fetchClasses(this.state.course.value) })
   }
 
   handleSelectSemester = item => {
     this.setState({ semester: item && item.value })
   }
 
-  handleInputChange = (e, module, index) => {
+  handleInputChange = (e, codDisciplina) => {
     const { checked } = e.target
 
     this.setState(prevState => ({
-      classes: {
-        ...prevState.classes,
-        [module]: [
-          ...prevState.classes[module].slice(0, index),
-          {
-            ...prevState.classes[module][index],
-            done: checked
-          },
-          ...prevState.classes[module].slice(index + 1)
-        ]
-      }
+      allClassesDone: [
+        ...prevState.allClassesDone,
+        codDisciplina
+      ]
     }))
   }
 
@@ -181,7 +194,8 @@ class StudentForm extends Component {
       messageErrors,
       isError,
       isFetching,
-      isSolutionSuccess } = this.state
+      isSolutionSuccess,
+      allClassesDone } = this.state
 
     if (isSolutionSuccess) {
       return <Redirect to={'/horario'} />;
@@ -218,8 +232,9 @@ class StudentForm extends Component {
               <h3>Disciplinas Cursadas</h3>
               <form className='student-form-list' onSubmit={this.handleFormSubmit}>
                 <ClassesList 
-                  classes={ classes }
-                  handleInputChange={ this.handleInputChange } />
+                  classes={classes}
+                  allClassesDone={allClassesDone}
+                  handleInputChange={this.handleInputChange} />
                 { messageErrors.length > 0 &&
                   <MessageError errors={messageErrors} />
                 }

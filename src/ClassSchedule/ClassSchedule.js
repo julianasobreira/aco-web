@@ -53,7 +53,7 @@ class ClassSchedule extends Component {
     if (classesGrid) {
       classesGrid.forEach(classItem => {
         const { dia, horarioInicial } = classItem
-        initialClassesGrid[horarioInicial][dia] = `${classItem.codOferta} - ${classItem.disciplinaOfertada.nome}`
+        initialClassesGrid[horarioInicial][dia] = `${classItem.codOferta} - ${classItem.disciplinaOfertada}`
       })
     }
     return initialClassesGrid

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const ClassesList = ({ classes, handleInputChange }) => {
+const ClassesList = ({ classes, handleInputChange, allClassesDone }) => {
   if (!classes) {
     return null
   }
@@ -22,8 +22,8 @@ const ClassesList = ({ classes, handleInputChange }) => {
                 <input
                   name={item.codDisciplina}
                   type='checkbox'
-                  checked={item.done}
-                  onChange={e => handleInputChange(e, module, itemIndex)} />
+                  checked={!!allClassesDone.find(done => item.codDisciplina === done)}
+                  onChange={e => handleInputChange(e, item.codDisciplina)} />
                 <span>{`${item.codDisciplina} - ${item.nome}`}</span>
               </div>   
             )
@@ -37,7 +37,8 @@ const ClassesList = ({ classes, handleInputChange }) => {
 
 ClassesList.propTypes = {
   classes: PropTypes.object,
-  handleInputChange: PropTypes.func
+  handleInputChange: PropTypes.func,
+  allClassesDone: PropTypes.array,
 }
 
 export default ClassesList
