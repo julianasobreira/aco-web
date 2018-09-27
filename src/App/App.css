@@ -96,3 +96,29 @@
 .app-header-container i {
   font-size: 45px;
 }
+
+.helper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.96);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 0px inset;
+  display: flex;
+  font-size: 13px;
+  margin-left: -20px;
+  margin-right: -20px;
+  overflow-x: auto;
+}
+
+.helper-container {
+  max-width: 700px;
+}
+
+.helper-container-text {
+  color: rgb(122, 134, 154);
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  padding: 15px 20px;
+  text-decoration: none;
+}

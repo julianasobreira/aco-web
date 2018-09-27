@@ -109,8 +109,12 @@ class ClassSchedule extends Component {
     return (
       <div className='classes-schedule'>
         <span className='classes-schedule-link'>
-          <a onClick={this.redirectToHome}>Voltar ao formulário</a>
-          <a onClick={this.downloadSolutionGrid}>Baixar horário</a>
+          <a onClick={this.redirectToHome}>
+            <i className='fa fa-long-arrow-left'></i> Voltar ao formulário
+          </a>
+          <a onClick={this.downloadSolutionGrid}>
+            <i className='fa fa-download'></i> Baixar horário
+          </a>
         </span>
         <Fragment>
         

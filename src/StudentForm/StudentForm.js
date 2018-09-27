@@ -219,6 +219,7 @@ class StudentForm extends Component {
           <Select
             className='student-form-select'
             name='course'
+            placeholder='Selecione um curso para continuar'
             value={course && course.value}
             onChange={this.handleSelectCourse}
             options={courses}
@@ -230,6 +231,7 @@ class StudentForm extends Component {
                 className='student-form-select'
                 name='semester'
                 value={semester}
+                placeholder='Selecione a oferta desejada'
                 onChange={this.handleSelectSemester}
                 options={semesters}
               />

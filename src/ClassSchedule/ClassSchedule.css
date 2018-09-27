@@ -54,14 +54,11 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
-}
-
-.classes-schedule-link a {
-  border-bottom: 1px solid;
+  color: rgb(122, 134, 154);
 }
 
 .classes-schedule-link a:hover {
-  color: #3b99fc;
+  color: #2684ff;
 }
 
 .classes-schedule-time {
