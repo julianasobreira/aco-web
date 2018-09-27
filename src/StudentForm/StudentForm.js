@@ -77,15 +77,23 @@ class StudentForm extends Component {
       })
 
       const state = getInfo(ACCESS_FORM_INFO)
-      const semester = semestres.find(semestre => semestre === state.semester);
+      let semester = ''
+      let allClassesDone = []
+      const { course } = this.state;
+
+      if (state && (course.label === state.course.label ||
+          course.value === state.course.value)) {
+        semester = semestres.find(semestre => semestre === state.semester)
+        allClassesDone = state.allClassesDone
+      }
 
       this.setState({
         isFetching: false,
         isError: false,
         classes: courseModules,
         semesters: semestres.map(semester => ({ value: semester, label: semester })),
-        allClassesDone: state.allClassesDone,
-        semester: semester || ''
+        allClassesDone,
+        semester
       })
     })
     .catch(error => {
@@ -145,7 +153,7 @@ class StudentForm extends Component {
 
       setInfo(ACCESS_FORM_INFO, {
         semester: semester,
-        courseId: course.value,
+        course: course,
         allClassesDone
       })
 
