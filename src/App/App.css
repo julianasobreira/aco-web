@@ -92,6 +92,7 @@
   background-color: #0c93f1;
   padding: 0 13px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .app-header-container i {
