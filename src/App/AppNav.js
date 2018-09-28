@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import Menu from './Menu'
 import { Link } from 'react-router-dom'
 import { isLoggedIn } from '../utils/auth'
-import { clearAllInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
+import { clearInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 
 class AppHeader extends Component {
+  clearAuthInfo = () => {
+    clearInfo(ACCESS_AUTH_INFO)
+  }
+
   render() {
     return (
       <section className='app-nav'>
         <div className='app-nav-container'>
           { isLoggedIn(ACCESS_AUTH_INFO)
-            ? <a href='' className='login-button' onClick={clearAllInfo}>
+            ? <a href='' className='login-button' onClick={this.clearAuthInfo}>
                 Logout
               </a>
             : <Link to='/login' className='login-button'>

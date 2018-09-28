@@ -14,7 +14,7 @@ const ClassesList = ({ classes, handleInputChange, allClassesDone }) => {
     <Fragment>
      {
       Object.keys(classes).map((module, moduleIndex) =>
-        <div key={moduleIndex}>
+        <Fragment key={moduleIndex}>
           <h4>{module}</h4>
           {
             classes[module].map((item, itemIndex) =>
@@ -28,7 +28,7 @@ const ClassesList = ({ classes, handleInputChange, allClassesDone }) => {
               </div>   
             )
           }
-        </div>
+        </Fragment>
       )
      }
     </Fragment>

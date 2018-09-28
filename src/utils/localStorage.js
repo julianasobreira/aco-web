@@ -12,6 +12,11 @@ export const clearInfo = key => {
 
 export const clearAllInfo = () => {
   localStorage.removeItem(ACCESS_SOLUTION_INFO)
+  localStorage.removeItem(ACCESS_FORM_INFO)
+  localStorage.removeItem(ACCESS_AUTH_INFO)
+}
+
+export const clearAuthInfo = () => {
   localStorage.removeItem(ACCESS_AUTH_INFO)
 }
 

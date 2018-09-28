@@ -11,6 +11,7 @@
   background-color: #1659bf;
   color: #bfdfff;
   padding: 20px 0 80px 0;
+  margin: 0;
 }
 
 .app-header h1,
@@ -104,9 +105,6 @@
   background-color: rgba(255, 255, 255, 0.96);
   box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 0px inset;
   display: flex;
-  font-size: 13px;
-  margin-left: -20px;
-  margin-right: -20px;
   overflow-x: auto;
 }
 
@@ -114,8 +112,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   max-width: 700px;
   color: rgb(122, 134, 154);
+  padding: 0;
 }
 
 .helper-container i {
@@ -126,7 +126,7 @@
   font-size: 0.8rem;
   display: inline-block;
   position: relative;
-  padding: 20px 10px;
+  padding: 15px 10px 15px 25px;
   text-decoration: none;
 }
 
@@ -136,4 +136,12 @@
 
 .helper-container-text-link:hover {
   color: #2684ff;
+}
+
+@media (max-width: 530px) {
+  .helper-container {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
 }

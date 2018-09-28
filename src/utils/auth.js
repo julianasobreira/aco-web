@@ -11,7 +11,7 @@ export const isLoggedIn = key => {
   return info.token && !isTokenExpired(info.token)
 }
 
-const getTokenExpirationDate = encodedToken => {
+export const getTokenExpirationDate = encodedToken => {
   const token = decode(encodedToken)
   if (!token.exp) { 
     return null
@@ -23,7 +23,15 @@ const getTokenExpirationDate = encodedToken => {
   return date
 }
 
-const isTokenExpired = token => {
+export const isTokenExpired = token => {
   const expirationDate = getTokenExpirationDate(token)
   return expirationDate < new Date()
+}
+
+export const getAuthData = token => {
+  const { email, codCurso } = decode(token);
+  return {
+    token,
+    email, 
+    codCurso }
 }

@@ -8,9 +8,8 @@
 
 @media (max-width: 530px) {
   .student-form-select {
-    width: 100%;
+    width: 90vw;
   }
-
 }
 
 .student-form-button {
@@ -47,6 +46,13 @@
 .student-form-list-item {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 530px) {
+  .student-form-list-item {
+    margin: 1rem 0;
+  }
+
 }
 
 .student-form-list-item input {

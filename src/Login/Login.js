@@ -4,7 +4,8 @@ import md5 from 'md5'
 import { setInfo, ACCESS_AUTH_INFO } from '../utils/localStorage'
 import { Redirect } from 'react-router-dom'
 import Loading from '../Loading/Loading'
-import './Login.css';
+import './Login.css'
+import { getAuthData } from '../utils/auth'
 
 class Login extends Component {
   state = {
@@ -35,7 +36,8 @@ class Login extends Component {
     })
     axios.post(`${process.env.API_URL}/login`, {email, senha: md5(senha)})
       .then(response => {
-        setInfo(ACCESS_AUTH_INFO, response.data)
+        const userData = getAuthData(response.data)
+        setInfo(ACCESS_AUTH_INFO, userData)
         this.setState({
           loginSuccess: true,
           loginError: false,

@@ -8,7 +8,7 @@ const isValidClassCode = item => {
   return regex.test(item)
 }
 const isValidOfferingCode = item => {
-  const regex = /OFER[0-9]{4}/
+  const regex = /OFER[0-9]{4}(?:-[A-Z])?/
   return regex.test(item)
 }
 

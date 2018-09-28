@@ -39,11 +39,11 @@ class CourseOfferingsEdit extends Component {
     this.setState({ isFetching: true })
     axios.post(`${process.env.API_URL}/oferta?curso=${this.userInfo.codCurso}&semestre=${year}.${semester}`, uploadedCourseOfferings)
     .then(() => {
-      closeEditMode()
       this.setState({
         isFetching: false,
         isError: false
       })
+      closeEditMode()
     })
     .catch(error => {
       console.log('Erro: ', error)

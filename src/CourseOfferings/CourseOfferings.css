@@ -15,18 +15,12 @@
   align-items: baseline;
   justify-content: flex-start;
   margin-bottom: 5px;
+  color: rgb(122, 134, 154);
+  cursor: pointer;
 }
 
 .course-offerings-checkbox-control {
   margin-right: 10px;
-}
-
-.course-offerings-label {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  color: rgb(122, 134, 154);
-  cursor: pointer;
 }
 
 .course-offerings-label:hover {
