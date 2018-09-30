@@ -1,5 +1,5 @@
 .classes-schedule {
-  width: 700px;
+  width: 816.5px;
 }
 
 .classes-schedule-container {
@@ -72,7 +72,7 @@
   font-size: 1em;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 816.5px) {
   .classes-schedule-row--gray,
   .classes-schedule-row--header,
   .classes-schedule-row {
@@ -108,6 +108,10 @@
 
   .friday {
     order: 4;
+  }
+
+  .saturday {
+    order: 5;
   }
 
   .classes-schedule {

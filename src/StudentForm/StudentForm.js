@@ -135,12 +135,28 @@ class StudentForm extends Component {
     this.setState({ isFetching: true })
     axios.post(`${process.env.API_URL}/solucao?curso=${course.value}&semestre=${semester}`, done)
     .then(response => {
-      const classesGrid = response.data.map(item => ({
-        dia: item.dia,
-        codOferta: item.codOferta,
-        horarioInicial: item.horarioInicial,
-        disciplinaOfertada: item.disciplinaOfertada.nome
-      }))
+
+      const classesGrid = response.data
+        .reduce((final, item) => {
+          const classes = []
+          for(let inicio = 0; inicio < item.duracaoHoras; inicio++) {
+            classes.push({
+              ...item,
+              horarioInicial: item.horarioInicial + inicio
+            })
+          }
+
+          return [
+            ...final,
+            ...classes
+          ]
+        }, [])
+        .map(item => ({
+          dia: item.dia,
+          codOferta: item.codOferta,
+          horarioInicial: item.horarioInicial,
+          disciplinaOfertada: item.disciplinaOfertada.nome
+        }))
 
       setInfo(ACCESS_SOLUTION_INFO, classesGrid)
       setInfo(ACCESS_FORM_INFO, {

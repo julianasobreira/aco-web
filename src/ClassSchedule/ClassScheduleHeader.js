@@ -9,6 +9,7 @@ const ClassScheduleHeader = () => {
       <div className='classes-schedule-header wednesday'>Quarta-Feira</div>
       <div className='classes-schedule-header thursday'>Quinta-Feira</div>
       <div className='classes-schedule-header friday'>Sexta-Feira</div>
+      <div className='classes-schedule-header saturday'>Sábado</div>
     </Fragment>
   )
 }

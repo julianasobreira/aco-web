@@ -25,6 +25,10 @@ const ClassScheduleRow = ({classes, rowHeader}) => {
         { classes['sex'] && <div className='classes-schedule-time'>{ rowHeader }</div>}
         { classes['sex'] }
       </div>
+      <div className='classes-schedule-cell saturday'>
+        { classes['sab'] && <div className='classes-schedule-time'>{ rowHeader }</div>}
+        { classes['sab'] }
+      </div>
     </Fragment>
   )
 }
