@@ -12,22 +12,22 @@ import ClassScheduleRow from './ClassScheduleRow'
 import ClassScheduleHeader from './ClassScheduleHeader'
 
 const initialClassesGrid = {
-  7: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  8: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  9: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  10: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  11: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  12: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  13: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  14: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  15: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  16: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  17: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  18: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  19: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  20: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  21: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
-  22: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
+  7: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  8: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  9: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  10: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  11: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  12: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  13: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  14: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  15: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  16: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  17: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  18: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  19: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  20: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  21: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
+  22: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
 }
 
 const hourColumns = {
@@ -54,7 +54,8 @@ const daysHeader = [
   'Terça-feira',
   'Quarta-feira',
   'Quinta-feira',
-  'Sexta-feira'
+  'Sexta-feira',
+  'Sábado',
 ]
 
 class ClassSchedule extends Component {
@@ -95,20 +96,20 @@ class ClassSchedule extends Component {
 
     const initialWscols = [
       {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
-      {wch: 0},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
     ];
 
     const wscols = data.reduce((finalWscols, row) =>
