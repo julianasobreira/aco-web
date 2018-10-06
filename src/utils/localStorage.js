@@ -21,5 +21,6 @@ export const clearAuthInfo = () => {
 }
 
 export const setInfo = (key, info) => {
+  localStorage.removeItem(key)
   localStorage.setItem(key, JSON.stringify(info))
 }

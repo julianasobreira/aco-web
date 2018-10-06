@@ -158,14 +158,13 @@ class StudentForm extends Component {
           disciplinaOfertada: item.disciplinaOfertada.nome
         }))
 
-      setInfo(ACCESS_SOLUTION_INFO, classesGrid)
       setInfo(ACCESS_FORM_INFO, {
         semester: semester,
         course: course,
         allClassesDone
       })
+      setInfo(ACCESS_SOLUTION_INFO, classesGrid)
 
-      window.location.reload();
       this.setState({
         isFetching: false,
         isSolutionSuccess: true,

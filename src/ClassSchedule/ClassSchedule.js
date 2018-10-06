@@ -11,7 +11,7 @@ import './ClassSchedule.css'
 import ClassScheduleRow from './ClassScheduleRow'
 import ClassScheduleHeader from './ClassScheduleHeader'
 
-const initialClassesGrid = {
+const getInitialClassesGrid = () => ({
   7: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
   8: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
   9: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
@@ -28,7 +28,7 @@ const initialClassesGrid = {
   20: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
   21: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
   22: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '', 'sab': '' },
-}
+})
 
 const hourColumns = {
   7: '07:00',
@@ -61,31 +61,32 @@ const daysHeader = [
 class ClassSchedule extends Component {
   state = {
     toHome: false,
-    solution: null
+    solution: this.formatGrid(getInfo(ACCESS_SOLUTION_INFO))
   }
 
   componentDidMount () {
     window.scrollTo(0, 0);
-    this.setState({
-      solution: getInfo(ACCESS_SOLUTION_INFO)
-    });
   }
 
   formatGrid (classesGrid) {
+    const initialClassesGrid = getInitialClassesGrid()
     if (classesGrid) {
       classesGrid.forEach(classItem => {
         const { dia, horarioInicial } = classItem
         initialClassesGrid[horarioInicial][dia] = `${classItem.codDisciplina} - ${classItem.disciplinaOfertada}`
       })
+
+      return initialClassesGrid
     }
-    return initialClassesGrid
+
+    return {}
   }
 
   downloadSolutionGrid = () => {
-    const classesGridFormated = this.formatGrid(this.state.solution)
-    const data = Object.keys(classesGridFormated).map(hour => ([
+    const { solution } = this.state;
+    const data = Object.keys(solution).map(hour => ([
         hourColumns[hour],
-        ...Object.values(classesGridFormated[hour])
+        ...Object.values(solution[hour])
       ]));
 
 
@@ -131,9 +132,9 @@ class ClassSchedule extends Component {
   }
 
   render() {
-    const classesGridFormated = this.formatGrid(this.state.solution)
+    const { solution, toHome} = this.state;
     
-    if (this.state.toHome) {
+    if (toHome) {
       return <Redirect to={'/'} />;
     }
 
@@ -149,56 +150,56 @@ class ClassSchedule extends Component {
         </span>
         <Fragment>
         
-          { this.state.solution
+          { solution
             ? <div className='classes-schedule-container' ref={solutionGrid => this.solutionGrid = solutionGrid}>
                 <ClassScheduleHeader />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['7'] }
+                  classes={ solution['7'] }
                   rowHeader={hourColumns[7]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['8'] }
+                  classes={ solution['8'] }
                   rowHeader={hourColumns[8]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['9'] }
+                  classes={ solution['9'] }
                   rowHeader={hourColumns[9]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['10'] }
+                  classes={ solution['10'] }
                   rowHeader={hourColumns[10]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['11'] }
+                  classes={ solution['11'] }
                   rowHeader={hourColumns[11]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['12'] }
+                  classes={ solution['12'] }
                   rowHeader={hourColumns[12]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['13'] }
+                  classes={ solution['13'] }
                   rowHeader={hourColumns[13]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['14'] }
+                  classes={ solution['14'] }
                   rowHeader={hourColumns[14]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['15'] }
+                  classes={ solution['15'] }
                   rowHeader={hourColumns[15]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['16'] }
+                  classes={ solution['16'] }
                   rowHeader={hourColumns[16]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['17'] }
+                  classes={ solution['17'] }
                   rowHeader={hourColumns[17]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['18'] }
+                  classes={ solution['18'] }
                   rowHeader={hourColumns[18]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['19'] }
+                  classes={ solution['19'] }
                   rowHeader={hourColumns[19]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['20'] }
+                  classes={ solution['20'] }
                   rowHeader={hourColumns[20]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['21'] }
+                  classes={ solution['21'] }
                   rowHeader={hourColumns[21]} />
                 <ClassScheduleRow 
-                  classes={ classesGridFormated['21'] }
+                  classes={ solution['21'] }
                   rowHeader={hourColumns[22]} />
               </div>
             : <div className='message'>Retorne ao formulário e preencha seus campos.</div>
