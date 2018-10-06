@@ -13,7 +13,9 @@ class App extends Component {
     return (
       <div className='app'>
         <AppHeader location={this.props.location} />
-        { match.isExact && <Helper /> } 
+        { (match.url.indexOf('/admin') === -1 && match.url.indexOf('/horario') === -1)
+          && <Helper />
+        } 
         <AppBody isFetching={this.isFetching} />
       </div>
     );
