@@ -66,11 +66,9 @@ class ClassSchedule extends Component {
 
   componentDidMount () {
     window.scrollTo(0, 0);
-    setTimeout(() => {
-      this.setState({
-        solution: getInfo(ACCESS_SOLUTION_INFO)
-      });
-    }, 200);
+    this.setState({
+      solution: getInfo(ACCESS_SOLUTION_INFO)
+    });
   }
 
   formatGrid (classesGrid) {

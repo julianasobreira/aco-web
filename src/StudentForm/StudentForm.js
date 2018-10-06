@@ -165,6 +165,7 @@ class StudentForm extends Component {
         allClassesDone
       })
 
+      window.location.reload();
       this.setState({
         isFetching: false,
         isSolutionSuccess: true,
