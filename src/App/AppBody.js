@@ -13,7 +13,7 @@ const AppBody = ({ isFetching }) => {
       <div className='app-body-container'>
         <Switch>
           <Route exact path='/' component={StudentForm} />
-          <Route path='/horario' component={ClassSchedule} />
+          <Route exact path='/horario' component={ClassSchedule} />
           <Route path='/admin' render={ props => {
             return ( 
               isLoggedIn(ACCESS_AUTH_INFO)

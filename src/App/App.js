@@ -8,14 +8,12 @@ require('font-awesome/css/font-awesome.css')
 
 class App extends Component {
   render() {
-    const {match} = this.props
-
+    const { match } = this.props
+    
     return (
       <div className='app'>
         <AppHeader location={this.props.location} />
-        { (match.url.indexOf('/admin') === -1 && match.url.indexOf('/horario') === -1) &&
-          <Helper />
-        } 
+        { match.isExact && <Helper /> } 
         <AppBody isFetching={this.isFetching} />
       </div>
     );
