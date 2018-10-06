@@ -51,10 +51,6 @@ class CourseCurriculumItem extends Component {
                 list={item.coRequisitos}
               />
               <FormList
-                label='Pró-Requisitos'
-                list={item.proRequisitos}
-              />
-              <FormList
                 label='Pré-Requisitos'
                 list={item.preRequisitos}
               />

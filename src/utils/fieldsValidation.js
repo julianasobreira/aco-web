@@ -2,11 +2,19 @@ const isValidNumber = item => {
   const number = Number(item)
   return Number.isInteger(number) && number >= 0
 }
-const isValidWeekday = item => item === 'seg' || item === 'ter' || item === 'qua' || item === 'qui' || item === 'sex'
+
+const isValidWeekday = item => item === 'seg' ||
+  item === 'ter' ||
+  item === 'qua' ||
+  item === 'qui' ||
+  item === 'sex' ||
+  item === 'sab'
+
 const isValidClassCode = item => {
-  const regex = /[A-Z]{4}[0-9]{4}/
+  const regex = /[A-Z]{4}[0-9]{4}(?:-[A-Z])?/
   return regex.test(item)
 }
+
 const isValidOfferingCode = item => {
   const regex = /OFER[0-9]{4}(?:-[A-Z])?/
   return regex.test(item)
@@ -18,7 +26,7 @@ const fieldsValidation = {
     isValid: item => isValidNumber(item)
   },
   weekday: {
-    errorMessage: '*Esse campo deve conter dias da semana (seg, ter, qua, qui, sex)',
+    errorMessage: '*Esse campo deve conter dias da semana (seg, ter, qua, qui, sex, sab)',
     isValid: item => isValidWeekday(item)
   },
   classCode: {

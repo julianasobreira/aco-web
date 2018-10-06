@@ -27,6 +27,7 @@ const initialClassesGrid = {
   19: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   20: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
   21: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
+  22: { 'seg': '', 'ter': '', 'qua': '', 'qui': '', 'sex': '' },
 }
 
 const hourColumns = {
@@ -45,6 +46,7 @@ const hourColumns = {
   19: '19:00',
   20: '20:00',
   21: '21:00',
+  22: '22:00',
 }
 
 const daysHeader = [
@@ -67,14 +69,14 @@ class ClassSchedule extends Component {
       this.setState({
         solution: getInfo(ACCESS_SOLUTION_INFO)
       });
-    }, 30);
+    }, 200);
   }
 
   formatGrid (classesGrid) {
     if (classesGrid) {
       classesGrid.forEach(classItem => {
         const { dia, horarioInicial } = classItem
-        initialClassesGrid[horarioInicial][dia] = `${classItem.codOferta} - ${classItem.disciplinaOfertada}`
+        initialClassesGrid[horarioInicial][dia] = `${classItem.codDisciplina} - ${classItem.disciplinaOfertada}`
       })
     }
     return initialClassesGrid
@@ -196,6 +198,9 @@ class ClassSchedule extends Component {
                 <ClassScheduleRow 
                   classes={ classesGridFormated['21'] }
                   rowHeader={hourColumns[21]} />
+                <ClassScheduleRow 
+                  classes={ classesGridFormated['21'] }
+                  rowHeader={hourColumns[22]} />
               </div>
             : <div className='message'>Retorne ao formulário e preencha seus campos.</div>
           }

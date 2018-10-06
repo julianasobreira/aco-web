@@ -153,7 +153,7 @@ class StudentForm extends Component {
         }, [])
         .map(item => ({
           dia: item.dia,
-          codOferta: item.codOferta,
+          codDisciplina: item.codDisciplina,
           horarioInicial: item.horarioInicial,
           disciplinaOfertada: item.disciplinaOfertada.nome
         }))
@@ -190,12 +190,23 @@ class StudentForm extends Component {
   }
 
   handleInputChange = (e, codDisciplina) => {
-    this.setState(prevState => ({
-      allClassesDone: [
-        ...prevState.allClassesDone,
-        codDisciplina
-      ]
-    }))
+    const checked = e.target.checked
+
+    this.setState(prevState => {
+      if (checked) {
+        return {
+          allClassesDone: [
+            ...prevState.allClassesDone,
+            codDisciplina
+          ]
+        }
+      }
+      
+      return {
+        allClassesDone: prevState.allClassesDone
+          .filter(cod => cod !== codDisciplina)
+      }
+    })
   }
 
   render() {

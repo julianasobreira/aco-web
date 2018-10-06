@@ -108,15 +108,14 @@ class CourseCurriculum extends Component {
 
   convertArrayToObject = array => {
     return array.map(row => ({
-      nome: row[0] || '',
-      codDisciplina: row[1] || '',
+      codDisciplina: row[0] || '',
+      nome: row[1] || '',
       cargaHoraria: row[2] || '',
-      periodo: row[3] || '',
-      ciclo: row[4] || '',
-      preRequisitos: row[5] ? this.convertStringToList(row[5]) : [],
-      coRequisitos: row[6] ? this.convertStringToList(row[6]) : [],
-      proRequisitos: row[7] ? this.convertStringToList(row[7]) : [],
-      equivalencias: row[8] ? this.convertStringToList(row[8]) : [],
+      preRequisitos: row[3] ? this.convertStringToList(row[3]) : [],
+      coRequisitos: row[4] ? this.convertStringToList(row[4]) : [],
+      periodo: row[5] || '',
+      equivalencias: row[6] ? this.convertStringToList(row[6]) : [],
+      ciclo: row[7] || ''
     }))
   }
 

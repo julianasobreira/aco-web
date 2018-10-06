@@ -78,8 +78,8 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
         //API_URL: 'https://quiet-wave-46823.herokuapp.com/api/v1.0',
-        API_URL: 'http://200.133.3.55:5000/api/v1.0'
-        // API_URL: 'http://localhost:5000/api/v1.0'
+        // API_URL: 'http://200.133.3.55:5000/api/v1.0'
+        API_URL: 'http://localhost:5000/api/v1.0'
 
       }
     );
